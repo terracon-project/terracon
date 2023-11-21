@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Region</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box left_box">
+            <div class="left_content_box">
+                <div>
+                    <div>
+			    <input type="image" src="{% static 'image/icon01.png' %}" alt="">
+                    </div>
+                    <div>
+			    <input type="image" src="{% static 'image/icon02.png' %}" alt="">
+                    </div>
+                    <div>
+			    <input type="image" src="{% static 'image/icon03.png' %}" alt="">
+                    </div>
+                </div>
+                <div>
+			<img src="{% static 'image/logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    
+        <div class="box center_box">
+            <div class="center_content_box">
+                <h2>STEP 1</h2>
+                <div>
+                    <p><em>Region 선택</em> 나라를 선택한 후 세부리전을 선택해 주세요</p>
+                    <div class="combobox">
+                        <select id="region" name="region">
+                            <option value="asia">아시아 태평양</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <p><em>Region 세부 선택</em> 세부 리전 확인 후 선택해주세요</p>
+                    <div class="combobox">
+                        <select id="region_detail" name="region_detail">
+                            <option value="asia_2">서울 ap-northeast-2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <section>
+                    <button class="create">시작하기</button>
+                    <button class="load">불러오기</button>
+                </section>
+            </div>
+        </div>
+    
+        <div class="box right_box">
+            <h3>CODE VIEW</h3>
+            <div class="right_content_box">
+                <!-- 실제 코드가 들어가는지 / 메뉴얼이 들어가는지 -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
