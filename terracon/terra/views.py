@@ -6,4 +6,6 @@ def region(request):
     return render(request,'1_1_region.html')
 def instance(request):
     return render(request,'1_2_ins_type.html')
+def key(request):
+    return render(request,'1_3_key.html')
 

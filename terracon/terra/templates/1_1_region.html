@@ -1,11 +1,11 @@
-<!-- {% load static %} -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="{% static '/css/index.css' %}">
     <title>Region</title>
 </head>
 
@@ -15,17 +15,17 @@
             <div class="left_content_box">
                 <div>
                     <div>
-                        <input type="image" src="../static/image/icon01.png" alt="">
+                        <input type="image" src="{% static 'static/image/icon01.png' %}" alt="">
                     </div>
                     <div>
-                        <input type="image" src="../static/image/icon02.png" alt="">
+                        <input type="image" src="{% static 'static/image/icon02.png' %}" alt="">
                     </div>
                     <div>
-                        <input type="image" src="../static/image/icon03.png" alt="">
+                        <input type="image" src="{% static 'static/image/icon03.png' %}" alt="">
                     </div>
                 </div>
                 <div>
-                    <img src="../static/image/logo_small.png" alt="">
+                    <img src="{% static 'static/image/logo_small.png' %}" alt="">
                 </div>
             </div>
         </div>
@@ -58,8 +58,8 @@
                 </div>
 
                 <section>
-                    <a href="0_main.html"><input type="image" src="../static/image/btn_back.png" alt=""></a>
-                    <a href="1_2_ins_type.html"><input type="image" src="../static/image/btn_next.png" alt=""></a>
+                    <a href=""><input type="image" src="{% static 'static/image/btn_back.png' %}" alt=""></a>
+                    <a href="instance"><input type="image" src="{% static 'static/image/btn_next.png' %}" alt=""></a>
                 </section>
             </div>
         </div>
