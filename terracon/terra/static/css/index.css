@@ -87,7 +87,10 @@ body{
     justify-content: center;
     margin-top: 100px;
 }
-.center_content_box > footer > button{
+.center_content_box > footer > a{
+    text-decoration: none;
+}
+.create, .load{
     width: 310px;
     height: 80px;
     color: #fff;
@@ -143,10 +146,10 @@ h2{
     position: absolute;
     left: 300px;
 }
-.center_content_box > section > input{
+.center_content_box > section > a > input{
     margin: 0 10px;
 }
-.center_content_box > section > input:active{
+.center_content_box > section > a > input:active{
     transform: scale(0.95);
 }
 .text_box{
