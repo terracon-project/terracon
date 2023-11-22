@@ -1,11 +1,11 @@
-{% load static %}
-<DOCTYPE html>
+<!-- {% load static %} -->
+<!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="../css/index.css">
     <title>Main</title>
 </head>
 
@@ -15,17 +15,17 @@
             <div class="left_content_box">
                 <div>
                     <div>
-			    <input type="image" src="{% static 'image/icon01.png' %}" alt="">
+                        <input type="image" src="../image/icon01.png" alt="">
                     </div>
                     <div>
-			    <input type="image" src="{% static 'image/icon02.png' %}" alt="">
+                        <input type="image" src="../image/icon02.png" alt="">
                     </div>
                     <div>
-			    <input type="image" src="{% static 'image/icon03.png' %}" alt="">
+                        <input type="image" src="../image/icon03.png" alt="">
                     </div>
                 </div>
                 <div>
-			<img src="{% static 'image/logo.png' %}" alt="">
+                    <img src="../image/logo_small.png" alt="">
                 </div>
             </div>
         </div>
@@ -38,14 +38,14 @@
                     <p>Step 2</p>
                     <p>Step 3</p>
                 </div>
-		<img src="{% static 'image/big_logo.png' %}" alt="">
+                <img src="../image/logo_big.png" alt="">
                 <p>별도의 설치없이</p>
                 <p>테라폼을 간단한 클릭만으로</p>
                 <p>다양한 클라우드 인프라를 생성해보세요.</p>
-                <section>
+                <footer>
                     <button class="create">생성하기</button>
                     <button class="load">불러오기</button>
-                </section>
+                </footer>
             </div>
         </div>
     
@@ -53,7 +53,8 @@
             <h3>CODE VIEW</h3>
             <div class="right_content_box">
                 <h4>Code View입니다.</h4>
-                <p>생성 code를 확인하실 수 있지만 수정은 불가능 합니다.</p>
+                <p>생성 code를 확인하실 수 있지만</p>
+                <p>수정은 불가능 합니다.</p>
             </div>
         </div>
     </div>
