@@ -5,7 +5,7 @@ body{
 }
 
 .left_box{
-    width: 150px;
+    width: 80px;
 }
 .center_box{
     width: 1170px;
@@ -40,14 +40,17 @@ body{
 .left_content_box > div > div > input{
     display: block;
     margin: 30px auto;
+    width: 50px;
 }
 .left_content_box > div > img{
     display: block;
     margin: 0 auto;
+    width: 50px;
 }
 
 .center_content_box{
     height: 900px;
+    position: relative;
 }
 .center_content_box > .navi{
     display: flex;
@@ -65,6 +68,8 @@ body{
     font-style: none;
     font-size: 25px;
 }
+
+/* 메인페이지 중앙 부분 */
 .center_content_box > img{
     display: block;
     margin: 100px auto 50px;
@@ -77,76 +82,49 @@ body{
     text-align: center;
     margin: 10px;
 }
-.center_content_box > section{
+.center_content_box > footer{
     display: flex;
-    margin: 50px 200px 0;
+    justify-content: center;
+    margin-top: 100px;
 }
-.center_content_box > section > button{
-    width: 350px;
+.center_content_box > footer > button{
+    width: 310px;
     height: 80px;
-    color: #00A3FF;
-    font-size: 35px;
+    color: #fff;
+    font-size: 25px;
     background-color: transparent;
     border: 3px solid #00A3FF;
     border-radius: 10px;
     display: block;
-    margin: 50px auto;
+    margin: 0px 20px;
     cursor: pointer;
 }
-.center_content_box > section > button:active{
+.center_content_box > footer > button:active{
     transform: scale(0.95);
 }
 
-.right_content_box{
-    width: 500px;
-    height: 750px;
-    background-color: #242424;
-    margin: 50px;
-    border-radius: 20px;
-}
-
+/* 스텝1이후 중앙 부분 */
 h2{
+    margin-top: -35px;
     color: #00A3FF;
-    font-size: 60px;
+    font-size: 50px;
     text-align: center;
 }
-h3{
-    margin-top: 60px;
-    color: #00A3FF;
-    font-size: 35px;
-    text-align: center;
-}
-h4{
-    padding-top: 60px;
-    color: #808080;
-    font-size: 40px;
-    text-align: center;
-}
-.right_content_box > p{
-    margin: 60px;
-    color: #ffffff;
-    font-size: 25px;
-    text-align: center;
-}
-
-
-/* ### */
-
 
 .center_content_box > div{
-    margin: 50px 0px 100px 100px;
+    margin: 0 100px 35px;
 }
 .center_content_box > div > p{
     color: #808080;
-    font-size: 25px;
+    font-size: 15px;
+    margin-bottom: 30px;
 }
 .center_content_box > div > p > em{
     color: #ffffff;
-    font-size: 35px;
+    font-size: 25px;
     font-style: normal;
 }
 .combobox{
-    position: relative;
     margin-top: -10px;
     width: 970px;
     height: 50px;
@@ -157,6 +135,77 @@ h4{
     height: 100%;
     background-color: #242424;
     color: #ffffff;
+    font-size: 15px;
+    padding-left: 25px;
+}
+.center_content_box > section{
+    display: flex;
+    position: absolute;
+    left: 300px;
+}
+.center_content_box > section > input{
+    margin: 0 10px;
+}
+.center_content_box > section > input:active{
+    transform: scale(0.95);
+}
+.text_box{
+    margin-top: -10px;
+    width: 945px;
+    height: 50px;
+    border: 5px solid white;
+    background-color: #242424;
+    color: #ffffff;
+    font-size: 15px;
+    padding-left: 25px;
+}
+.text_box::placeholder{
+    color: #ffffff;
+    font-size: 15px;
+}
+
+.key_load{
+    display: flex;
+    justify-content: space-between;
+    width: 280px;
+    height: 55px;
+    padding: 0px 40px;
+    color: #fff;
+    font-size: 18px;
+    background-color: transparent;
+    border: 3px solid #00A3FF;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.key_load:active{
+    transform: scale(0.95);
+}
+.key_load > img{
+    height: 40px;
+    margin-top: 10px;
+}
+
+.right_content_box{
+    width: 550px;
+    height: 750px;
+    background-color: #242424;
+    margin: 30px;
+    border-radius: 20px;
+}
+h3{
+    margin-top: 50px;
+    color: #00A3FF;
+    font-size: 25px;
+    text-align: center;
+}
+h4{
+    padding-top: 60px;
+    color: #808080;
+    font-size: 30px;
+    text-align: center;
+}
+.right_content_box > p{
+    color: #808080;
     font-size: 20px;
-    padding-left: 10px;
+    text-align: center;
 }
