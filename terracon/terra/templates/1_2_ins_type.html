@@ -1,11 +1,11 @@
-{% load static %}
+<!-- {% load static %} -->
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="../static/css/index.css">
     <title>Ins_type</title>
 </head>
 
@@ -15,24 +15,37 @@
             <div class="left_content_box">
                 <div>
                     <div>
-                        <input type="image" src="{% static 'image/icon01.png' %}" alt="">
+                        <input type="image" src="../static/image/icon01.png" alt="">
                     </div>
                     <div>
-                        <input type="image" src="{% static 'image/icon02.png' %}" alt="">
+                        <input type="image" src="../static/image/icon02.png" alt="">
                     </div>
                     <div>
-                        <input type="image" src="{% static 'image/icon03.png' %}" alt="">
+                        <input type="image" src="../static/image/icon03.png" alt="">
                     </div>
                 </div>
                 <div>
-                    <img src="{% static 'image/logo.png' %}" alt="">
+                    <img src="../static/image/logo_small.png" alt="">
                 </div>
             </div>
         </div>
     
         <div class="box center_box">
             <div class="center_content_box">
-                <h2>STEP 2</h2>
+                <div class="navi">
+                    <p>Step 0</p>
+                    <p>Step 1</p>
+                    <p><em>Step 2</em></p>
+                    <p>Step 3</p>
+                </div>
+                <h2>Step 2</h2>
+                <div>
+                    <p><em>Key pair 불러오기</em></p>
+                    <div class="key_load">
+                        <p>파일 불러오기</p>
+                        <img src="../static/image/icon_file.png" alt="파일 불러오기">
+                    </div>
+                </div>
                 <div>
                     <p><em>AMI</em> AMI를 생성해 입력해주세요</p>
                     <div class="combobox">
@@ -47,27 +60,30 @@
                 </div>
 
                 <div>
-                    <p><em>Region 세부 선택</em> 세부 리전 확인 후 선택해주세요</p>
+                    <p><em>Instance</em> 인스턴스 타입을 선택해주세요</p>
                     <div class="combobox">
-                        <select id="region_detail" name="region_detail">
-                            <option value="asia_2">서울 ap-northeast-2</option>
+                        <select id="ins_type" name="ins_type">
+                            <option value="t2.m">t2.micro(vCPU: 1 / GIB : 1 / 프리티어)</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <p><em>Region 세부 선택</em> 세부 리전 확인 후 선택해주세요</p>
-                    <input type="text" placeholder="type any thing...">
+                    <p><em>Instance Name</em> 인스턴스 이름을 지정해주세요</p>
+                    <input class="text_box" type="text" placeholder="type any thing...">
                 </div>
 
-                <button>다음</button>
+                <section>
+                    <input type="image" src="../static/image/btn_back.png" alt="">
+                    <input type="image" src="../static/image/btn_next.png" alt="">
+                </section>
             </div>
         </div>
     
         <div class="box right_box">
             <h3>CODE VIEW</h3>
             <div class="right_content_box">
-                <!-- 실제 코드가 들어가는지 / 메뉴얼이 들어가는지 -->
+
             </div>
         </div>
     </div>
