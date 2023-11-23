@@ -2,6 +2,22 @@ body{
     margin: 0;
     padding: 0;
 }
+.combobox{
+    margin-top: -10px;
+    width: 725px;
+    height: 50px;
+    border: 3px solid white;
+    border-radius: 5px;
+}
+.combobox select{
+    width: 100%;
+    height: 100%;
+    background-color: #242424;
+    color: #ffffff;
+    font-size: 15px;
+    padding-left: 25px;
+}
+
 .left_box{
     width: 960px;
     background-color: #242424;
@@ -85,7 +101,7 @@ body{
 .right_box > #page1 > div > input[type="text"]:focus{
     outline: none;
 }
-.right_box > #page1 > a >.start_btn{
+.right_box > #page1 > a > .start_btn{
     display: block;
     margin: 70px auto 0;
     width: 400px;
@@ -100,7 +116,7 @@ body{
 .right_box > #page1 > a > .start_btn:active{
     transform: scale(0.95);
 }
-.right_box > #page1 > img{
+.right_box > #page1 > a > img{
     display: block;
     margin: 40px auto 0;
     position: absolute;
