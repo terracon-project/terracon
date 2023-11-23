@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/0_home.css' %}">
+    <title>Home</title>
+
+    <style>
+        #page1 { display: block; }
+        #page2 { display: none; }
+    </style>
+
+    <script>
+            function showPage(pageId) {
+            var pages = document.getElementsByTagName('section');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].style.display = 'none';
+            }
+            var selectedPage = document.getElementById(pageId);
+            selectedPage.style.display = 'block';
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box left_box">
+            <img class="logo" src="{% static 'image/logo.png' %}" alt="logo">
+            <h3>환영합니다</h3>
+            <p>별도의 설치없이</p>
+            <p>테라폼을 간단한 클릭만으로</p>
+            <p>다양한 클라우드 인프라를 생성해보세요.</p>
+        </div>
+
+        <div class="box right_box">
+            <section id="page1">
+                <p>액세스 키를 입력하거나, CSV파일을 불러오세요.</p>
+                <button class="iam_btn" onclick=""></button>
+                <a href="">생성하러 가기 ></a>
+                <div>
+                    <p>Access Key 입력</p>
+                    <input type="text" placeholder="">
+                </div>
+                <div>
+                    <p>Secrey Key 입력</p>
+                    <input type="text" placeholder="">
+                </div>
+                <a herf ="/terra/list"><button class="start_btn" onclick="showPage('page2')">시작하기</button></a>
+                <img src="{% static 'image/btn_point.png' %}" alt="">
+            </section>
+
+            <div id="page2">
+                <div>
+                    <p>Terracon을 사용하여</p>
+                    <p>새로운 인스턴스를 생성하거나</p>
+                    <p>보유중인 main.tf 파일을</p>
+                    <p>불러와 인스턴스를 생성해주세요.</p>
+                </div>
+                <a href="/terra/step1"><button class="create_btn">생성하기</button></a>
+                <button class="load_btn">불러오기</button>
+                <img src="{% static 'image/btn_point.png' %}" alt="">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

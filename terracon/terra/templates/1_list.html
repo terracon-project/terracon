@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/1_list.css' %}">
+    <title>List</title>
+</head>
+
+<body>
+    <div class="navi">
+        <p><em>Home</em></p>
+        <p>Step 1</p>
+        <p>Step 2</p>
+    </div>
+    <h3>HOME</h3>
+    <div class="list_area">
+        <header>
+            <div>인스턴스명</div>
+            <div>인스턴스 ID</div>
+            <div>상태</div>
+        </header>
+        <div>
+            <div>Mini Terraform</div>
+            <div>i-07bi1273129127</div>
+            <div>실행</div>
+        </div>
+        <footer>
+            <a href="/terra/home"><button>+ 생성하기</button></a>
+        </footer>
+    </div>
+    <div class="btn_box">
+        <button class="play_btn" onclick=""><img src="{% static 'image/btn_play.png' %}" alt="실행하기"></button>
+        <button class="pause_btn" onclick=""><img src="{% static 'image/btn_pause.png' %}" alt="정지하기"></button>
+        <button class="delete_btn" onclick=""><img src="{% static 'image/btn_delete.png' %}" alt="삭제하기"></button>
+    </div>
+</body>
+
+</html>
