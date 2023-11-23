@@ -42,9 +42,22 @@
                 <div>
                     <p><em>Region 선택</em> 나라를 선택한 후 세부리전을 선택해 주세요</p>
                     <div class="combobox">
-                        <select id="region" name="region">
-                            <option value="asia">아시아 태평양</option>
+                        <select id="region" name="region"eRegion()">
+                            <option value="asia">아시아 태평양</option> onchange="chang
                         </select>
+                        <script>
+                             function changeRegion() {
+        var selectedOption = document.getElementById("region").value;
+        
+        fetch(`/code/generate_code/?option=${selectedOption}`)
+            .then(response => response.json())
+            .then(data => {
+                var generatedCode = document.getElementById("generatedCode");
+                generatedCode.innerHTML = `<h3>${selectedOption} 코드</h3><pre><code>${data.code}</code></pre>`;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+                        </script>
                     </div>
                 </div>
 
@@ -54,6 +67,7 @@
                         <select id="region_detail" name="region_detail">
                             <option value="asia_2">서울 ap-northeast-2</option>
                         </select>
+                        <p>{{ tfstring }}</p>
                     </div>
                 </div>
 
