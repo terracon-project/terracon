@@ -85,7 +85,7 @@ body{
 .right_box > #page1 > div > input[type="text"]:focus{
     outline: none;
 }
-.right_box > #page1 > .start_btn{
+.right_box > #page1 > a >.start_btn{
     display: block;
     margin: 70px auto 0;
     width: 400px;
@@ -97,7 +97,7 @@ body{
     border-radius: 30px;
     cursor: pointer;
 }
-.right_box > #page1 > .start_btn:active{
+.right_box > #page1 > a > .start_btn:active{
     transform: scale(0.95);
 }
 .right_box > #page1 > img{
@@ -117,7 +117,7 @@ body{
     text-align: center;
     margin-bottom: -10px;
 }
-.right_box > #page2 > .create_btn, .load_btn{
+.right_box > #page2 > a > .create_btn, .right_box > #page2 > .load_btn{
     display: block;
     margin: 40px auto 0;
     width: 360px;
@@ -129,6 +129,7 @@ body{
     border-radius: 30px;
     cursor: pointer;
 }
+
 .right_box > #page2 > .create_btn:active, .load_btn:active{
     transform: scale(0.95);
 }

@@ -73,6 +73,9 @@ div{
     font-size: 20px;
     margin-top: 8px;
 }
+.list_area > footer > a:active{
+    transform: scale(0.95);
+}
 
 .btn_box{
     position: fixed;
