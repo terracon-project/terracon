@@ -22,11 +22,13 @@
             <div>인스턴스 ID</div>
             <div>상태</div>
         </header>
-        <div>
-            <div>Mini Terraform</div>
-            <div>i-07bi1273129127</div>
-            <div>실행</div>
-        </div>
+          {% for instance in instances_info %}
+          <div>
+            <div>{{ instance.name }}</div>
+            <div>{{ instance.id }}</div>
+            <div>{{ instance.state }}</div>
+          </div>
+          {% endfor %}
         <footer>
             <a href="/terra/step2"><button>+ 생성하기</button></a>
         </footer>

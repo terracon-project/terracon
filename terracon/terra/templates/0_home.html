@@ -7,7 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/0_home.css' %}">
     <title>Home</title>
-
+    <style>
+        #page1 { display: block; }
+        #page2 { display: none; }
+    </style>
+<!-- 
     <style>
         #page1 { display: block; }
         #page2 { display: none; }
@@ -24,7 +28,7 @@
             selectedPage.style.display = 'block';
            
         }
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -42,7 +46,29 @@
                 <p>액세스 키를 입력하거나, CSV파일을 불러오세요.</p>
                 <button class="iam_btn" onclick=""></button>
                 <a href="">생성하러 가기 ></a>
-                <div>
+                <form method="POST" action="/terra/list/">
+                    {% csrf_token %}
+                    <div>
+                        <p>Access Key 입력</p>
+                        <input type="text" name="aws_access_key" placeholder="">
+                    </div>
+                    <div>
+                        <p>Secret Key 입력</p>
+                        <input type="text" name="aws_secret_key" placeholder="">
+                    </div>
+                    <div>
+                        <p>Region 선택</p>
+                        <div class="combobox">
+                            <select id="region_detail" name="aws_region">
+                                <option value="ap-northeast-2">ap-northeast-2</option>
+                                <option value="ap-northeast-2">ap-northeast-2</option>
+                                <!-- 다른 리전 옵션들 추가 -->
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="start_btn">시작하기</button>
+                </form>
+                <!-- <div>
                     <p>Access Key 입력</p>
                     <input type="text" placeholder="">
                 </div>
@@ -58,7 +84,7 @@
                         </select>
                     </div>
                 </div>
-                <a href="/terra/list"><button class="start_btn">시작하기</button></a>
+                <a href="/terra/list"><button class="start_btn">시작하기</button></a> -->
                 <!-- <img src="{% static 'image/btn_point.png' %}" alt=""> -->
             </section>
 
