@@ -22,22 +22,92 @@
             <div>인스턴스 ID</div>
             <div>상태</div>
         </header>
-          {% for instance in instances_info %}
-          <div>
+        {% for instance in instances_info %}
+        <div>
+            <div><input type="checkbox" name="selected_instances" value="{{ instance.id }}"></div>
             <div>{{ instance.name }}</div>
             <div>{{ instance.id }}</div>
             <div>{{ instance.state }}</div>
-          </div>
-          {% endfor %}
+        </div>
+        {% endfor %}
         <footer>
             <a href="/terra/step2"><button>+ 생성하기</button></a>
         </footer>
     </div>
     <div class="btn_box">
-        <button class="play_btn" onclick=""><img src="{% static 'image/btn_play.png' %}" alt="실행하기"></button>
-        <button class="pause_btn" onclick=""><img src="{% static 'image/btn_pause.png' %}" alt="정지하기"></button>
-        <button class="delete_btn" onclick=""><img src="{% static 'image/btn_delete.png' %}" alt="삭제하기"></button>
+        <button class="play_btn" onclick="executeSelectedInstances('play')"><img src="{% static 'image/btn_play.png' %}"
+                alt="실행하기"></button>
+        <button class="pause_btn" onclick="executeSelectedInstances('pause')"><img src="{% static 'image/btn_pause.png' %}"
+                alt="정지하기"></button>
+        <button class="delete_btn" onclick="executeSelectedInstances('delete')"><img src="{% static 'image/btn_delete.png' %}"
+                alt="삭제하기"></button>
     </div>
+    <script>
+        // function executeInstance(action) {
+        //     // action 매개변수에 따라 실행할 동작을 수행합니다.
+        //     if (action === 'play') {
+        //         // 실행하기 버튼을 눌렀을 때의 동작
+        //         // 선택된 인스턴스를 실행하는 API 호출 등을 수행합니다.
+        //     } else if (action === 'pause') {
+        //         // 정지하기 버튼을 눌렀을 때의 동작
+        //         // 선택된 인스턴스를 정지하는 API 호출 등을 수행합니다.
+        //     } else if (action === 'delete') {
+        //         // 삭제하기 버튼을 눌렀을 때의 동작
+        //         // 선택된 인스턴스를 삭제하는 API 호출 등을 수행합니다.
+        //     }
+        // }
+        function executeSelectedInstances(action) {
+            const selectedInstances = document.querySelectorAll('input[type=checkbox]:checked');
+            const selectedInstanceIds = [];
+
+            selectedInstances.forEach(instance => {
+                selectedInstanceIds.push(instance.value);
+            });
+
+            // AJAX를 이용하여 서버에 선택된 인스턴스 목록을 전송합니다.
+            fetch('/terra/execute_selected_instances', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // CSRF 토큰을 포함시켜야 할 수도 있습니다.
+                },
+                body: JSON.stringify({
+                    action: action,
+                    instance_ids: selectedInstanceIds
+                })
+            })
+                .then(response => {
+                    // 서버로부터의 응답 처리
+                    if (response.ok) {
+                        console.log(`선택된 인스턴스를 ${action} 했습니다.`);
+                        // 성공 시 추가적인 처리
+                    } else {
+                        console.error(`선택된 인스턴스 ${action}에 실패했습니다.`);
+                        // 실패 시 추가적인 처리
+                    }
+                })
+                .catch(error => {
+                    console.error('오류 발생:', error);
+                });
+        }
+
+        // CSRF 토큰을 가져오는 함수 (Django에서는 CSRF 보호를 사용하는 경우 필요)
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }   
+    </script>
+
 </body>
 
 </html>
