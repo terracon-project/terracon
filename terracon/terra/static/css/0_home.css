@@ -21,8 +21,8 @@ body{
 }
 
 .logo{
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     display: block;
     margin: 100px auto 80px;
 }
@@ -36,7 +36,7 @@ body{
 }
 .left_box > p{
     color: #ffffff;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     margin-bottom: -20px;
 }
@@ -45,9 +45,9 @@ body{
 }
 .left_box > div > .p_main{
     color: #00A3FF;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
-    margin-bottom: -20px;
+    margin-bottom: -15px;
 }
 .left_box > div > .p_main > em{
     color: #FBB03B;
@@ -65,10 +65,10 @@ body{
 }
 .left_box > a > div > span{
     border: 3px solid #00A3FF;
-    border-radius: 20px;
+    border-radius: 10px;
     color: #ffffff;
-    font-size: 25px;
-    padding: 5px 20px 8px;
+    font-size: 18px;
+    padding: 10px 30px 10px;
 }
 
 .right_box > p{
@@ -111,7 +111,7 @@ body{
     border-radius: 5px;
     background-color: #313131;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 18px;
     padding-left: 20px;
     margin-bottom: 10px;
 }
@@ -130,20 +130,20 @@ body{
     height: 100%;
     background-color: #313131;
     color: #ffffff;
-    font-size: 15px;
+    font-size: 18px;
     padding-left: 25px;
     outline: none;
 }
 .right_box > form > .start_btn{
     display: block;
     margin: 70px auto 0;
-    width: 626px;
+    width: 500px;
     height: 80px;
     color: #00A3FF;
     font-size: 25px;
     background-color: transparent;
     border: 3px solid #00A3FF;
-    border-radius: 30px;
+    border-radius: 20px;
     cursor: pointer;
 }
 .right_box > form > .start_btn:active{

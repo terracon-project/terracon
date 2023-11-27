@@ -18,23 +18,23 @@ div{
     text-align: center;
     align-items: center;
     background-color: #00A3FF;
-    height: 50px;
+    height: 60px;
     margin: 0 200px;
     padding: 0 100px;
 }
 .list_area > header > div{
     font-size: 20px;
     color: #ffffff;
+    font-weight: bold;
 }
 .list_area > div{
     display: flex;
     justify-content: space-between;
-    text-align: center;
     align-items: center;
     background-color: #242424;
-    height: 50px;
+    height: 60px;
     margin: 0 200px;
-    padding: 0 100px;
+    padding: 0 50px;
 }
 .list_area > div > div{
     font-size: 20px;
@@ -44,7 +44,7 @@ div{
     display: block;
     margin: 0 auto;
     width: 1520px;
-    height: 50px;
+    height: 60px;
     color: #00A3FF;
     border: 3px solid #00A3FF;
     cursor: pointer;
@@ -55,7 +55,7 @@ div{
     background-color: transparent;
     color: #00A3FF;
     font-size: 20px;
-    margin-top: 8px;
+    margin-top: 15px;
 }
 .list_area > footer > a:active{
     transform: scale(0.95);
@@ -71,7 +71,7 @@ div{
 .btn_box > button{
     border: none;
     background-color: transparent;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 .btn_box > button:active{
     transform: scale(0.95);
