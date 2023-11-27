@@ -2,22 +2,7 @@ body{
     margin: 0;
     padding: 0;
 }
-.combobox{
-    margin-top: -10px;
-    width: 722px;
-    height: 50px;
-    border: 2px solid white;
-    border-radius: 0px;
-}
-.combobox select{
-    width: 100%;
-    height: 100%;
-    background-color: #313131;
-    color: #ffffff;
-    font-size: 15px;
-    padding-left: 25px;
-    outline: none;
-}
+
 
 .left_box{
     width: 960px;
@@ -39,7 +24,7 @@ body{
     width: 300px;
     height: 300px;
     display: block;
-    margin: 180px auto 80px;
+    margin: 100px auto 80px;
 }
 .left_box > h3{
     color: #00A3FF;
@@ -47,12 +32,43 @@ body{
     font-style: none;
     font-weight: normal;
     text-align: center;
+    margin-top: -60px;
 }
 .left_box > p{
     color: #ffffff;
     font-size: 25px;
     text-align: center;
     margin-bottom: -20px;
+}
+.left_box > div{
+    margin-top: 60px;
+}
+.left_box > div > .p_main{
+    color: #00A3FF;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: -20px;
+}
+.left_box > div > .p_main > em{
+    color: #FBB03B;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: -20px;
+    font-style: normal;
+}
+.left_box > a{
+    text-decoration: none;
+    text-align: center;
+}
+.left_box > a > div{
+    margin-top: 60px;
+}
+.left_box > a > div > span{
+    border: 3px solid #00A3FF;
+    border-radius: 20px;
+    color: #ffffff;
+    font-size: 25px;
+    padding: 5px 20px 8px;
 }
 
 .right_box > p{
@@ -63,13 +79,12 @@ body{
 }
 .right_box > .iam_btn{
     display: block;
-    margin: 0 auto;
+    margin: 150px auto 0;
     border: none;
-    width: 500px;
+    width: 600px;
     height: 100px;
     background: url(../image/btn_iam.png) no-repeat center center;
     cursor: pointer;
-    scale: 0.9;
 }
 .right_box > .iam_btn:active{
     transform: scale(0.95);
@@ -83,16 +98,17 @@ body{
     text-align: center;
 }
 .right_box > form > div{
-    margin: 0 130px 30px;
+    margin: 0 167px 30px;
 }
 .right_box > form > div > p{
     color: #ffffff;
     font-size: 20px;
 }
 .right_box > form > div > input{
-    width: 700px;
+    width: 600px;
     height: 50px;
-    border: 2px solid #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 5px;
     background-color: #313131;
     color: #ffffff;
     font-size: 20px;
@@ -102,10 +118,26 @@ body{
 .right_box > form > div > input[type="text"]:focus{
     outline: none;
 }
+.combobox{
+    margin-top: -10px;
+    width: 626px;
+    height: 50px;
+    border: 3px solid white;
+    border-radius: 5px;
+}
+.combobox select{
+    width: 100%;
+    height: 100%;
+    background-color: #313131;
+    color: #ffffff;
+    font-size: 15px;
+    padding-left: 25px;
+    outline: none;
+}
 .right_box > form > .start_btn{
     display: block;
     margin: 70px auto 0;
-    width: 400px;
+    width: 626px;
     height: 80px;
     color: #00A3FF;
     font-size: 25px;

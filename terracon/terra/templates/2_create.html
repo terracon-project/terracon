@@ -5,26 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/2_step.css' %}">
-    <title>step_2</title>
-
-    <style>
-        #pop_up {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/2_create.css' %}">
+    <title>create</title>
 
     <script>
-        function apply_check(pageId) {
-            var selectedPage = document.getElementById(pageId);
-            selectedPage.style.display = 'block';
-        }
-
-        function apply_cancel(pageId) {
-            var selectedPage = document.getElementById(pageId);
-            selectedPage.style.display = 'none';
-        }
-
         function uploadFile() {
             const fileInput = document.getElementById('fileInput');
             fileInput.onchange = function () {
@@ -53,7 +37,7 @@
 <body>
     <div class="container">
         <div class="box left_box">
-            <h2>Step 2</h2>
+            <h2>생성하기</h2>
             <div class="key">
                 <div>
                     <p>Key pair 불러오기</p>
@@ -91,8 +75,8 @@
                 <input class="text_box text2" type="text" placeholder="type any thing...">
             </div>
             <section>
-                <a href="/terra/list"><input type="image" src="{% static 'image/btn_back.png' %}" alt=""></a>
-                <button class="apply_btn" onclick="apply_check('pop_up')">APPLY</button>
+                <a href="/terra/main"><input type="image" src="{% static 'image/btn_back.png' %}" alt=""></a>
+                <a href="/terra/view"><button class="apply_btn">생성하기</button></a>
             </section>
         </div>
 
@@ -102,22 +86,6 @@
                 <img src="{% static 'image/logo_back.png' %}" alt="logo">
                 <!-- CODE VIEW 내용 -->
             </div>
-        </div>
-    </div>
-    <div id="pop_up">
-        <div class="pop_up_area">
-            <h4>인스턴스를 생성하시겠습니까?</h4>
-            <p>생성될 인스턴스의 정보를 확인하세요.</p>
-            <div class="code_area">
-
-                <!-- CODE VIEW 내용 -->
-            </div>
-            <section>
-                <button class="final_create_btn" onclick="">생성하기</button>
-                <button class="final_save_btn" onclick="">저장하기</button>
-            </section>
-            <button class="cancel" onclick="apply_cancel('pop_up')"><img src="{% static 'image/btn_cancel.png' %}"
-                    alt="취소"></button>
         </div>
     </div>
 </body>

@@ -12,11 +12,7 @@ import json
 def home(request):
     return render(request,'0_home.html')
 
-def step2(request):
-    aws_region = request.session.get('aws_region')
-    return render(request,'2_step2.html',{'aws_region':aws_region})
-
-def list(request):
+def main(request):
     if request.method == 'POST':
         # 사용자로부터 입력 받은 AWS 액세스 키, 시크릿 키, 리전 정보
         aws_access_key = request.POST.get('aws_access_key')
@@ -58,9 +54,9 @@ def list(request):
 
         # HTML 템플릿에 데이터 전달
         context = {'instances_info': instance_info_list}   
-        return render(request, '1_list.html', context)
+        return render(request, '1_main.html', context)
     else:
-        return render(request, '1_list.html')
+        return render(request, '1_main.html')
 def instances_view(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -84,6 +80,12 @@ def instances_view(request):
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
 
+def create(request):
+    aws_region = request.session.get('aws_region')
+    return render(request,'2_create.html',{'aws_region':aws_region})
+
+def view(request):
+    return render(request,'3_view.html')
 
     #     selected_instances = request.POST.getlist('instance_ids')
     #     action = request.POST.get('action')

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/0_home.css' %}">
-    <title>Home</title>
+    <title>home</title>
 
     <script>
         // IAM KEY 불러오기 버튼 기능
@@ -54,14 +54,22 @@
             <p>별도의 설치없이</p>
             <p>테라폼을 간단한 클릭만으로</p>
             <p>다양한 클라우드 인프라를 생성해보세요.</p>
+
+            <div>
+                <p class="p_main">IAM Key를 만들고</p>
+                <p class="p_main"><em>"AmazonEC2FullAccess"</em></p>
+                <p class="p_main">정책을 추가한 후 사용해주세요.</p>
+            </div>
+
+            <a href="https://us-east-1.console.aws.amazon.com/iamv2/home#/home" target="_blank">
+                <div><span>IAM Key 생성 & 정책 추가하러 가기 ></span></div>
+            </a>
         </div>
 
         <div class="box right_box">
-            <p>액세스 키를 입력하거나, CSV파일을 불러오세요.</p>
             <button class="iam_btn" onclick="loadFile()"></button>
-            <a href="https://us-east-1.console.aws.amazon.com/iamv2/home#/home" target="_blank">생성하러 가기 ></a>
 
-            <form method="POST" action="/terra/list/"> <!-- List로 Access Key / Secret Key 정보 전달 -->
+            <form method="POST" action="/terra/main/"> <!-- List로 Access Key / Secret Key 정보 전달 -->
                 {% csrf_token %}
                 <div>
                     <p>Access Key 입력</p>
