@@ -15,6 +15,7 @@
     {% csrf_token %}
     <div class="list_area">
         <header>
+            <div></div>
             <div>인스턴스명</div>
             <div>인스턴스 ID</div>
             <div>상태</div>
@@ -22,8 +23,9 @@
 
         {% for instance in instances_info %}
         <div>
-            <div><input type="checkbox" name="selected_instances" value="{{ instance.id }}"
-                    onclick="handleCheckboxClick('{{ instance.id }}')"></div>
+            <div>
+                <input type="checkbox" name="selected_instances" value="{{ instance.id }}" onclick="handleCheckboxClick('{{ instance.id }}')">
+            </div>
             <div>{{ instance.name }}</div>
             <div>{{ instance.id }}</div>
             <div>{{ instance.state }}</div>
