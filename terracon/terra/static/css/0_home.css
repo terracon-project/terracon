@@ -55,13 +55,13 @@ body{
     margin-bottom: -20px;
 }
 
-.right_box > #page1 > p{
+.right_box > p{
     color: #808080;
     font-size: 20px;
     text-align: center;
     margin-top: 160px;
 }
-.right_box > #page1 > .iam_btn{
+.right_box > .iam_btn{
     display: block;
     margin: 0 auto;
     border: none;
@@ -71,10 +71,10 @@ body{
     cursor: pointer;
     scale: 0.9;
 }
-.right_box > #page1 > .iam_btn:active{
+.right_box > .iam_btn:active{
     transform: scale(0.95);
 }
-.right_box > #page1 > a{
+.right_box > a{
     display: block;
     margin: 0 auto 30px;
     color: #00A3FF;
@@ -82,14 +82,14 @@ body{
     font-size: 20px;
     text-align: center;
 }
-.right_box > #page1 > form > div{
+.right_box > form > div{
     margin: 0 130px 30px;
 }
-.right_box > #page1 > form > div > p{
+.right_box > form > div > p{
     color: #ffffff;
     font-size: 20px;
 }
-.right_box > #page1 > form > div > input{
+.right_box > form > div > input{
     width: 700px;
     height: 50px;
     border: 2px solid #ffffff;
@@ -99,10 +99,10 @@ body{
     padding-left: 20px;
     margin-bottom: 10px;
 }
-.right_box > #page1 > form > div > input[type="text"]:focus{
+.right_box > form > div > input[type="text"]:focus{
     outline: none;
 }
-.right_box > #page1 > form > .start_btn{
+.right_box > form > .start_btn{
     display: block;
     margin: 70px auto 0;
     width: 400px;
@@ -114,47 +114,6 @@ body{
     border-radius: 30px;
     cursor: pointer;
 }
-.right_box > #page1 > form > .start_btn:active{
+.right_box > form > .start_btn:active{
     transform: scale(0.95);
-}
-.right_box > #page1 > form > a > img{
-    display: block;
-    margin: 40px auto 0;
-    position: absolute;
-    left: 45%;
-    bottom: 15%;
-}
-
-.right_box > #page2 > div{
-    margin: 220px auto 180px;
-}
-.right_box > #page2 > div > p{
-    color: #ffffff;
-    font-size: 25px;
-    text-align: center;
-    margin-bottom: -10px;
-}
-.right_box > #page2 > a > .create_btn, .right_box > #page2 > .load_btn{
-    display: block;
-    margin: 40px auto 0;
-    width: 360px;
-    height: 80px;
-    color: #ffffff;
-    font-size: 25px;
-    background-color: transparent;
-    border: 3px solid #00A3FF;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-.right_box > #page2 > .create_btn:active, .load_btn:active{
-    transform: scale(0.95);
-}
-.right_box > #page2 > img{
-    display: block;
-    margin: 40px auto 0;
-    transform: rotate(180deg);
-    position: absolute;
-    left: 45%;
-    bottom: 15%;
 }

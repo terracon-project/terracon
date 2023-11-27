@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/2_step.css' %}">
+    <title>step_2</title>
+
+    <style>
+        #pop_up {
+            display: none;
+        }
+    </style>
+
+    <script>
+        function apply_check(pageId) {
+            var selectedPage = document.getElementById(pageId);
+            selectedPage.style.display = 'block';
+        }
+
+        function apply_cancel(pageId) {
+            var selectedPage = document.getElementById(pageId);
+            selectedPage.style.display = 'none';
+        }
+
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            fileInput.onchange = function () {
+                const file = fileInput.files[0];
+                const fileNameElement = document.getElementById('fileName');
+
+                // 파일이 선택되었는지 확인
+                if (file) {
+                    // 파일 확장자 확인
+                    const extension = file.name.split('.').pop().toLowerCase();
+                    if (extension === 'pem') {
+                        // pem 확장자가 맞는 경우 파일 이름을 입력란에 넣기
+                        fileNameElement.value = file.name.replace(/\.[^/.]+$/, '');
+                    } else {
+                        alert('Please select a .pem file');
+                        fileNameElement.value = '';
+                    }
+                }
+            };
+            // 파일 선택 창 열기
+            fileInput.click();
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box left_box">
+            <h2>Step 2</h2>
+            <div class="key">
+                <div>
+                    <p>Key pair 불러오기</p>
+                    <a href="https://{{ aws_region }}.console.aws.amazon.com/ec2/home?region={{ aws_region }}#CreateKeyPair:"
+                        target="_blank">생성하러 가기 ></a>
+                </div>
+                <div>
+                    <input type="file" id="fileInput" style="display: none;">
+                    <button class="key_btn" onclick="uploadFile()"></button>
+                    <input class="text_box text1" type="text" id="fileName" placeholder="">
+                </div>
+            </div>
+            <div>
+                <p><em>AMI</em> AMI를 생성해 입력해주세요</p>
+                <div class="combobox">
+                    <select id="ami" name="ami">
+                        <option value="ami_1">Amazon Linux 2023 AMI</option>
+                        <option value="ami_2">Amazon Linux 2 AMI</option>
+                        <option value="ami_3">Red Hat Enterprise_linux 9</option>
+                        <option value="ami_4">Ubuntu Server 22.04 LTS</option>
+                        <option value="ami_5">Ubuntu Server 20.04 LTS</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <p><em>Instance</em> 인스턴스 타입을 선택해주세요</p>
+                <div class="combobox">
+                    <select id="ins_type" name="ins_type">
+                        <option value="t2.m">t2.micro(vCPU: 1 / GIB : 1 / 프리티어)</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <p><em>Instance Name</em> 인스턴스 이름을 지정해주세요</p>
+                <input class="text_box text2" type="text" placeholder="type any thing...">
+            </div>
+            <section>
+                <a href="/terra/list"><input type="image" src="{% static 'image/btn_back.png' %}" alt=""></a>
+                <button class="apply_btn" onclick="apply_check('pop_up')">APPLY</button>
+            </section>
+        </div>
+
+        <div class="box right_box">
+            <h3>CODE VIEW</h3>
+            <div class="content_box">
+                <img src="{% static 'image/logo_back.png' %}" alt="logo">
+                <!-- CODE VIEW 내용 -->
+            </div>
+        </div>
+    </div>
+    <div id="pop_up">
+        <div class="pop_up_area">
+            <h4>인스턴스를 생성하시겠습니까?</h4>
+            <p>생성될 인스턴스의 정보를 확인하세요.</p>
+            <div class="code_area">
+
+                <!-- CODE VIEW 내용 -->
+            </div>
+            <section>
+                <button class="final_create_btn" onclick="">생성하기</button>
+                <button class="final_save_btn" onclick="">저장하기</button>
+            </section>
+            <button class="cancel" onclick="apply_cancel('pop_up')"><img src="{% static 'image/btn_cancel.png' %}"
+                    alt="취소"></button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -7,29 +7,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/0_home.css' %}">
     <title>Home</title>
-    <style>
-        #page1 {
-            display: block;
-        }
-    </style>
-    <!-- 
-    <style>
-        #page1 { display: block; }
-        #page2 { display: none; }
-    </style>
 
     <script>
+        // IAM KEY 불러오기 버튼 기능
+        function loadFile() {
+            var input = document.createElement('input');
+            input.type = 'file';
 
-            function showPage(pageId) {
-            var pages = document.getElementsByTagName('section');
-            for (var i = 0; i < pages.length; i++) {
-                pages[i].style.display = 'none';
-            }
-            var selectedPage = document.getElementById(pageId);
-            selectedPage.style.display = 'block';
-           
+            input.onchange = function (e) {
+                var file = e.target.files[0];
+                var reader = new FileReader();
+
+                reader.readAsText(file);
+
+                reader.onload = function () {
+                    var fileContent = reader.result;
+                    processFileContent(fileContent);
+                };
+            };
+
+            input.click();
         }
-    </script> -->
+
+        function processFileContent(content) {
+            var lines = content.split('\n');
+            if (lines.length >= 2) {
+                var keys = lines[1].split(',');
+                if (keys.length >= 2) {
+                    document.getElementById("accessKeyInput").value = keys[0];
+                    document.getElementById("secretKeyInput").value = keys[1];
+                } else {
+                    alert('파일 형식이 잘못되었습니다.');
+                }
+            } else {
+                alert('파일이 비어 있습니다.');
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -43,100 +57,33 @@
         </div>
 
         <div class="box right_box">
-            <section id="page1">
-                <p>액세스 키를 입력하거나, CSV파일을 불러오세요.</p>
-                <button class="iam_btn" onclick="loadFile()"></button>
-                <script>
-                    function loadFile() {
-                        var input = document.createElement('input');
-                        input.type = 'file';
+            <p>액세스 키를 입력하거나, CSV파일을 불러오세요.</p>
+            <button class="iam_btn" onclick="loadFile()"></button>
+            <a href="https://us-east-1.console.aws.amazon.com/iamv2/home#/home" target="_blank">생성하러 가기 ></a>
 
-                        input.onchange = function (e) {
-                            var file = e.target.files[0];
-                            var reader = new FileReader();
-
-                            reader.readAsText(file);
-
-                            reader.onload = function () {
-                                var fileContent = reader.result;
-                                processFileContent(fileContent);
-                            };
-                        };
-
-                        input.click();
-                    }
-
-                    function processFileContent(content) {
-                        var lines = content.split('\n');
-                        if (lines.length >= 2) {
-                            var keys = lines[1].split(',');
-                            if (keys.length >= 2) {
-                                document.getElementById("accessKeyInput").value = keys[0];
-                                document.getElementById("secretKeyInput").value = keys[1];
-                            } else {
-                                alert('파일 형식이 잘못되었습니다.');
-                            }
-                        } else {
-                            alert('파일이 비어 있습니다.');
-                        }
-                    }
-                </script>
-
-                <a href="https://us-east-1.console.aws.amazon.com/iamv2/home#/home" target="_blank">생성하러 가기 ></a>
-                <form method="POST" action="/terra/list/">
-                    {% csrf_token %}
-                    <div>
-                        <p>Access Key 입력</p>
-                        <input type="text" id="accessKeyInput" name="aws_access_key" placeholder="">
-                    </div>
-                    <div>
-                        <p>Secret Key 입력</p>
-                        <input type="text" id="secretKeyInput" name="aws_secret_key" placeholder="">
-                    </div>
-                    <div>
-                        <p>Region 선택</p>
-                        <div class="combobox">
-                            <select id="region_detail" name="aws_region">
-                                <option value="ap-northeast-2">ap-northeast-2</option>
-                                <option value="ap-northeast-2">ap-northeast-3</option>
-                                <!-- 다른 리전 옵션들 추가 -->
-                            </select>
-                        </div>
-                    </div>
-                    <button type="submit" class="start_btn">시작하기</button>
-                </form>
-                <!-- <div>
+            <form method="POST" action="/terra/list/"> <!-- List로 Access Key / Secret Key 정보 전달 -->
+                {% csrf_token %}
+                <div>
                     <p>Access Key 입력</p>
-                    <input type="text" placeholder="">
+                    <input type="text" id="accessKeyInput" name="aws_access_key" placeholder="">
                 </div>
                 <div>
                     <p>Secret Key 입력</p>
-                    <input type="text" placeholder="">
+                    <input type="text" id="secretKeyInput" name="aws_secret_key" placeholder="">
                 </div>
+
                 <div>
                     <p>Region 선택</p>
                     <div class="combobox">
-                        <select id="region_detail" name="region_detail">
-                            <option value="asia_2">서울 ap-northeast-2</option>
+                        <select id="region_detail" name="aws_region">
+                            <option value="ap-northeast-2">ap-northeast-2</option>
+                            <option value="ap-northeast-3">ap-northeast-3</option>
+                            <!-- 다른 리전 옵션들 추가 -->
                         </select>
                     </div>
                 </div>
-                <a href="/terra/list"><button class="start_btn">시작하기</button></a> -->
-                <!-- <img src="{% static 'image/btn_point.png' %}" alt=""> -->
-            </section>
-        <!-- 
-            <div id="page2">
-                <div>
-                    <p>Terracon을 사용하여</p>
-                    <p>새로운 인스턴스를 생성하거나</p>
-                    <p>보유중인 main.tf 파일을</p>
-                    <p>불러와 인스턴스를 생성해주세요.</p>
-                </div>
-                <a href="/terra/step1"><button class="create_btn">생성하기</button></a>
-                <button class="load_btn">불러오기</button>
-                <img src="{% static 'image/btn_point.png' %}" alt="">
-            </div> 
-        -->
+                <button type="submit" class="start_btn">시작하기</button>
+            </form>
         </div>
     </div>
 </body>

@@ -3,24 +3,8 @@ body{
     padding: 0;
     background-color: #242424;
 }
-.navi{
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-.navi > p{
-    color: #FFFFFF;
-    font-size: 25px;
-    text-align: center;
-    margin: 15px;
-}
-.navi > p > em{
-    color: #00A3FF;
-    font-size: 25px;
-    font-style: normal;
-}
 h3{
-    margin-top: 10px;
+    margin-top: 50px;
     color: #00A3FF;
     font-size: 50px;
     text-align: center;
@@ -84,7 +68,7 @@ div{
     left: 50%;
     transform: translate(-50%, 0);
 }
-div > button{
+.btn_box > button{
     border: none;
     background-color: transparent;
     margin-right: 10px;

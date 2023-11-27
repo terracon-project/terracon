@@ -5,18 +5,16 @@ import subprocess
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 import json
-def region(request):
-    tfstr = "스트링 제대로 처리 되나요"
-    return render(request,'1_1_region.html',{'tfstring' : tfstr})
+# def region(request):
+#     tfstr = "스트링 제대로 처리 되나요"
+#     return render(request,'1_1_region.html',{'tfstring' : tfstr})
 
 def home(request):
     return render(request,'0_home.html')
 
-def step1(request):
-    return render(request,'2_step1.html')
 def step2(request):
     aws_region = request.session.get('aws_region')
-    return render(request,'3_step2.html',{'aws_region':aws_region})
+    return render(request,'2_step2.html',{'aws_region':aws_region})
 
 def list(request):
     if request.method == 'POST':

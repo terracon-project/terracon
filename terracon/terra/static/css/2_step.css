@@ -17,25 +17,8 @@ body{
 .box{
     height: 100vh;
 }
-
-.left_box > .navi{
-    display: flex;
-    justify-content: flex-end;
-    margin: 30px 30px;
-}
-.left_box > .navi > p{
-    color: #FFFFFF;
-    font-size: 25px;
-    text-align: center;
-    margin: 15px;
-}
-.left_box > .navi > p > em{
-    color: #00A3FF;
-    font-size: 25px;
-    font-style: normal;
-}
 .left_box > h2{
-    margin-top: -20px;
+    margin-top: 30px;
     color: #00A3FF;
     font-size: 50px;
     text-align: center;

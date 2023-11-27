@@ -10,48 +10,47 @@
 </head>
 
 <body>
-    
-    <div class="navi">
-        <p><em>Home</em></p>
-        <p>Step 1</p>
-        <p>Step 2</p>
+    <h3>Main</h3>
+
+    {% csrf_token %}
+    <div class="list_area">
+        <header>
+            <div>인스턴스명</div>
+            <div>인스턴스 ID</div>
+            <div>상태</div>
+        </header>
+
+        {% for instance in instances_info %}
+        <div>
+            <div><input type="checkbox" name="selected_instances" value="{{ instance.id }}"
+                    onclick="handleCheckboxClick('{{ instance.id }}')"></div>
+            <div>{{ instance.name }}</div>
+            <div>{{ instance.id }}</div>
+            <div>{{ instance.state }}</div>
+        </div>
+        {% endfor %}
+
+        <footer>
+            <a href="/terra/step2/"><button>+ 생성하기</button></a>
+        </footer>
     </div>
-    <h3>HOME</h3>
-        {% csrf_token %}
-        <div class="list_area">
-            <header>
-                <div>인스턴스명</div>
-                <div>인스턴스 ID</div>
-                <div>상태</div>
-            </header>
-            {% for instance in instances_info %}
-            <div>
-                <div><input type="checkbox" name="selected_instances" value="{{ instance.id }}"
-                        onclick="handleCheckboxClick('{{ instance.id }}')"></div>
-                <div>{{ instance.name }}</div>
-                <div>{{ instance.id }}</div>
-                <div>{{ instance.state }}</div>
-            </div>
-            {% endfor %}
-            <footer>
-                <a href="/terra/step2/"><button>+ 생성하기</button></a>
-            </footer>
-        </div>
-        <div class="btn_box">
-            <button class="play_btn" type="button">
-                <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="executeSelectedAction('start')">
-            </button>
-            <button class="pause_btn" type="button">
-                <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="executeSelectedAction('stop')">
-            </button>
-            <button class="delete_btn" type="button">
-                <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="executeSelectedAction('terminate')">
-            </button>
-        </div>
+
+    <div class="btn_box">
+        <button class="play_btn" type="button">
+            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="executeSelectedAction('start')">
+        </button>
+        <button class="pause_btn" type="button">
+            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="executeSelectedAction('stop')">
+        </button>
+        <button class="delete_btn" type="button">
+            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="executeSelectedAction('terminate')">
+        </button>
+    </div>
+
     <script>
         let selectedInstances = [];
+
         function handleCheckboxClick(instanceId) {
-            
             const index = selectedInstances.indexOf(instanceId);
             if (index === -1) {
                 // 선택되지 않은 경우 배열에 추가
@@ -61,32 +60,34 @@
                 selectedInstances.splice(index, 1);
             }
         }
+
         function executeSelectedAction(action) {
-        fetch('/terra/instances_view/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({
-                action: action,
-                instance_ids: selectedInstances
+            fetch('/terra/instances_view/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    action: action,
+                    instance_ids: selectedInstances
+                })
             })
-        })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Network response was not ok.');
-        })
-        .then(data => {
-            console.log(data); // 서버 응답 데이터 처리
-        })
-        .catch(error => {
-            console.error('There was an error!', error);
-        });
-    }
-    function getCookie(name) {
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(data => {
+                console.log(data); // 서버 응답 데이터 처리
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+        }
+
+        function getCookie(name) {
             let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
                 const cookies = document.cookie.split(';');
@@ -100,11 +101,8 @@
                 }
             }
             return cookieValue;
-        }    
-
+        }
     </script>
-
-
 </body>
 
 </html>
