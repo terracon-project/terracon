@@ -6,5 +6,5 @@ urlpatterns = [
     path('list/',views.list,name='list'),
     path('step1/',views.step1,name='step1'),
     path('step2/',views.step2, name='step2'),
-    path('execute_selected_instances/', views.execute_selected_instances, name='execute_selected_instances'),
+    path('instances_view/',views.instances_view,name='instance'),
 ]
