@@ -12,60 +12,30 @@ h3{
 div{
     text-align: center;
 }
+.list{
+    display: flex;
+    align-items: center;
+    width: 1520px;
+    height: 60px;
+    margin: 0 auto;
+}
+.list > div{
+    margin: 0 20px;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bold;
+}
+.list > div:nth-child(1){ width:100px; }
+.list > div:nth-child(2){ width:400px; }
+.list > div:nth-child(3){ width:700px; }
+.list > div:nth-child(4){ width:220px; }
 .list_area > header{
-    display: flex;
-    align-items: center;
     background-color: #00A3FF;
-    width: 1520px;
-    height: 60px;
-    margin: 0 auto;
-}
-.list_area > header > div{
-    margin: 0 20px;
-    font-size: 20px;
-    color: #ffffff;
-    font-weight: bold;
-}
-.list_area > header > div:nth-child(1){
-    width:100px;
-}
-.list_area > header > div:nth-child(2){
-    width:400px;
-}
-.list_area > header > div:nth-child(3){
-    width:700px;
-}
-.list_area > header > div:nth-child(4){
-    width:220px;
-}
-.list_area > div{
-    display: flex;
-    align-items: center;
-    width: 1520px;
-    height: 60px;
-    margin: 0 auto;
-}
-.list_area > div > div{
-    margin: 0 20px;
-    font-size: 20px;
-    color: #ffffff;
-    font-weight: bold;
-}
-.list_area > div > div:nth-child(1){
-    width:100px;
-}
-.list_area > div > div:nth-child(2){
-    width:400px;
-}
-.list_area > div > div:nth-child(3){
-    width:700px;
-}
-.list_area > div > div:nth-child(4){
-    width:220px;
 }
 .list_area > div > div{
     font-size: 20px;
     color: #ffffff;
+    border: 1px solid red;
 }
 
 .list_area > footer > a{

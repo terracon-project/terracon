@@ -7,47 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/1_main.css' %}">
     <title>main</title>
-</head>
-
-<body>
-    <h3>Main</h3>
-
-    {% csrf_token %}
-    <div class="list_area">
-        <header>
-            <div></div>
-            <div>인스턴스명</div>
-            <div>인스턴스 ID</div>
-            <div>상태</div>
-        </header>
-
-        {% for instance in instances_info %}
-        <div>
-            <div>
-                <input type="checkbox" name="selected_instances" value="{{ instance.id }}" onclick="handleCheckboxClick('{{ instance.id }}')">
-            </div>
-            <div>{{ instance.name }}</div>
-            <div>{{ instance.id }}</div>
-            <div>{{ instance.state }}</div>
-        </div>
-        {% endfor %}
-
-        <footer>
-            <a href="/terra/create/"><button>+ 생성하기</button></a>
-        </footer>
-    </div>
-
-    <div class="btn_box">
-        <button class="play_btn" type="button">
-            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="executeSelectedAction('start')">
-        </button>
-        <button class="pause_btn" type="button">
-            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="executeSelectedAction('stop')">
-        </button>
-        <button class="delete_btn" type="button">
-            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="executeSelectedAction('terminate')">
-        </button>
-    </div>
 
     <script>
         let selectedInstances = [];
@@ -104,7 +63,62 @@
             }
             return cookieValue;
         }
+
+        //체크박스 전체 선택
+        function toggleCheckboxes() {
+            var checkboxes = document.querySelectorAll('.checkboxes'); // 모든 체크박스 선택
+            var selectAllCheckbox = document.getElementById('selectAll'); // 전체 선택 체크박스 선택
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = selectAllCheckbox.checked; // 전체 선택 체크박스의 상태에 따라 체크박스들의 상태 변경
+            }
+        }
     </script>
+</head>
+
+<body>
+    <h3>Main</h3>
+
+    {% csrf_token %}
+    <div class="list_area">
+        <header class="list">
+            <div>
+                <input type="checkbox" id="selectAll" onchange="toggleCheckboxes()">
+            </div>
+            <div>인스턴스명</div>
+            <div>인스턴스 ID</div>
+            <div>상태</div>
+        </header>
+
+        {% for instance in instances_info %}
+        <div class="list">
+            <div>
+                <input type="checkbox" class="checkboxes" name="selected_instances" value="{{ instance.id }}" onclick="handleCheckboxClick('{{ instance.id }}')">
+            </div>
+            <div>{{ instance.name }}</div>
+            <div>{{ instance.id }}</div>
+            <div>{{ instance.state }}</div>
+        </div>
+        {% endfor %}
+
+        <footer>
+            <a href="/terra/create/"><button>+ 생성하기</button></a>
+        </footer>
+    </div>
+
+    <div class="btn_box">
+        <button class="play_btn" type="button">
+            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="executeSelectedAction('start')">
+        </button>
+        <button class="pause_btn" type="button">
+            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="executeSelectedAction('stop')">
+        </button>
+        <button class="delete_btn" type="button">
+            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="executeSelectedAction('terminate')">
+        </button>
+    </div>
+
+    
 </body>
 
 </html>
