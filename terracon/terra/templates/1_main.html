@@ -64,6 +64,26 @@
             return cookieValue;
         }
 
+        function startFunctions() {
+            executeSelectedAction('start');
+            noIns_popup();
+        }
+        function noIns_popup(){
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const targetDiv = document.getElementById('myModal');
+
+            let checked = false;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    checked = true;
+                }
+            });
+
+            if (!checked) {
+                targetDiv.style.display = 'flex';
+            }
+        }
+
         //체크박스 전체 선택
         function toggleCheckboxes() {
             var checkboxes = document.querySelectorAll('.checkboxes'); // 모든 체크박스 선택
@@ -72,6 +92,15 @@
             for (var i = 0; i < checkboxes.length; i++) {
                 checkboxes[i].checked = selectAllCheckbox.checked; // 전체 선택 체크박스의 상태에 따라 체크박스들의 상태 변경
             }
+        }
+
+        //팝업 온오프
+        function openPopup() {
+            document.getElementById('myModal').style.display = 'flex';
+        }
+  
+        function closePopup() {
+            document.getElementById('myModal').style.display = 'none';
         }
     </script>
 </head>
@@ -108,7 +137,7 @@
 
     <div class="btn_box">
         <button class="play_btn" type="button">
-            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="executeSelectedAction('start')">
+            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="startFunctions()">
         </button>
         <button class="pause_btn" type="button">
             <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="executeSelectedAction('stop')">
@@ -118,7 +147,14 @@
         </button>
     </div>
 
-    
+    <!-- 모달 팝업 -->
+    <div class="modal_container" id="myModal">
+        <div class="popup">
+            <p>선택된 인스턴스가 없습니다.</p>
+            <p>인스턴스를 선택해주세요.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
 </body>
 
 </html>
