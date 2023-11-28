@@ -66,21 +66,42 @@ def instances_view(request):
         data = json.loads(request.body)
         action = data.get('action')
         instance_ids = data.get('instance_ids')
-        instance_ids_str = ' '.join(instance_ids)
-        # AWS 인스턴스 제어
+        #instance_ids_str = ' '.join(instance_ids)
+        session = boto3.Session(
+                aws_access_key_id=request.session.get('aws_access_key'),
+                aws_secret_access_key=request.session.get('aws_secret_key'),
+                region_name=request.session.get('aws_region')
+            )
+        ec2 = session.client('ec2')
+
         try:
             if action == 'start':
-                    subprocess.run(f"aws ec2 start-instances --instance-ids {instance_ids_str}", shell=True)
+                ec2.start_instances(InstanceIds=instance_ids)
             elif action == 'stop':
-                    subprocess.run(f"aws ec2 stop-instances --instance-ids {instance_ids_str}", shell=True)
+                ec2.stop_instances(InstanceIds=instance_ids)
             elif action == 'terminate':
-                    subprocess.run(f"aws ec2 terminate-instances --instance-ids {instance_ids_str}", shell=True)
+                ec2.terminate_instances(InstanceIds=instance_ids)
             else:
-                return JsonResponse({'message': 'Invalid action'}, status=400)
+                return {'message': 'Invalid action'}, 400
 
-            return JsonResponse({'message': 'Success'})
+            return {'message': 'Success'}
+
         except Exception as e:
-            return JsonResponse({'message': str(e)}, status=500)
+            return {'message': str(e)}, 500
+        # AWS 인스턴스 제어
+        # try:
+        #     if action == 'start':
+        #             subprocess.run(f"aws ec2 start-instances --instance-ids {instance_ids_str}", shell=True)
+        #     elif action == 'stop':
+        #             subprocess.run(f"aws ec2 stop-instances --instance-ids {instance_ids_str}", shell=True)
+        #     elif action == 'terminate':
+        #             subprocess.run(f"aws ec2 terminate-instances --instance-ids {instance_ids_str}", shell=True)
+        #     else:
+        #         return JsonResponse({'message': 'Invalid action'}, status=400)
+
+        #     return JsonResponse({'message': 'Success'})
+        # except Exception as e:
+        #     return JsonResponse({'message': str(e)}, status=500)
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
 
@@ -91,24 +112,3 @@ def create(request):
 def view(request):
     return render(request,'3_view.html')
 
-    #     selected_instances = request.POST.getlist('instance_ids')
-    #     action = request.POST.get('action')
-    #     selected_instances = json.loads(request.body)
-    #     # action = selected_instances.get('action')
-    #     # instance_id = selected_instances.get('instance_ids')
-    #     for instance_id in selected_instances:
-    #         if action == 'start':
-    #             print("실행")
-    #             # 인스턴스 시작
-    #             subprocess.run(f"aws ec2 start-instances --instance-ids {instance_id}", shell=True)
-    #         elif action == 'stop':
-    #             print("정지")
-    #             # 인스턴스 정지
-    #             subprocess.run(f"aws ec2 stop-instances --instance-ids {instance_id}", shell=True)
-    #         elif action == 'terminate':
-    #             # 인스턴스 삭제
-    #             subprocess.run(f"aws ec2 terminate-instances --instance-ids {instance_id}", shell=True)
-        
-    #     return HttpResponseRedirect('/terra/list')  # 적절한 리디렉션 URL로 변경하세요
-
-    # return render(request, '0_home.html')    
