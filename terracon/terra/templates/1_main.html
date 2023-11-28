@@ -34,18 +34,18 @@
                     instance_ids: selectedInstances
                 })
             })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(data => {
-                console.log(data); // 서버 응답 데이터 처리
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Network response was not ok.');
+                })
+                .then(data => {
+                    console.log(data); // 서버 응답 데이터 처리
+                })
+                .catch(error => {
+                    console.error('There was an error!', error);
+                });
         }
 
         function getCookie(name) {
@@ -88,19 +88,23 @@
         function toggleCheckboxes() {
             var checkboxes = document.querySelectorAll('.checkboxes'); // 모든 체크박스 선택
             var selectAllCheckbox = document.getElementById('selectAll'); // 전체 선택 체크박스 선택
-
-            for (var i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = selectAllCheckbox.checked; // 전체 선택 체크박스의 상태에 따라 체크박스들의 상태 변경
+            if (selectAllCheckbox.checked) {
+                // 전체 선택 체크박스가 체크된 경우
+                selectedInstances = []; // 기존에 선택된 모든 인스턴스를 제거하고
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = true; // 모든 체크박스를 선택 상태로 변경
+                    selectedInstances.push(checkboxes[i].value); // 해당 체크박스의 값을 리스트에 추가
+                }
+            } else {
+                // 전체 선택 체크박스가 체크 해제된 경우
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = false; // 모든 체크박스를 해제 상태로 변경
+                }
+                selectedInstances = []; // 선택된 모든 인스턴스를 제거
+                // for (var i = 0; i < checkboxes.length; i++) {
+                //     checkboxes[i].checked = selectAllCheckbox.checked; // 전체 선택 체크박스의 상태에 따라 체크박스들의 상태 변경
+                // }
             }
-        }
-
-        //팝업 온오프
-        function openPopup() {
-            document.getElementById('myModal').style.display = 'flex';
-        }
-  
-        function closePopup() {
-            document.getElementById('myModal').style.display = 'none';
         }
     </script>
 </head>
@@ -122,7 +126,8 @@
         {% for instance in instances_info %}
         <div class="list">
             <div>
-                <input type="checkbox" class="checkboxes" name="selected_instances" value="{{ instance.id }}" onclick="handleCheckboxClick('{{ instance.id }}')">
+                <input type="checkbox" class="checkboxes" name="selected_instances" value="{{ instance.id }}"
+                    onclick="handleCheckboxClick('{{ instance.id }}')">
             </div>
             <div>{{ instance.name }}</div>
             <div>{{ instance.id }}</div>
@@ -147,14 +152,7 @@
         </button>
     </div>
 
-    <!-- 모달 팝업 -->
-    <div class="modal_container" id="myModal">
-        <div class="popup">
-            <p>선택된 인스턴스가 없습니다.</p>
-            <p>인스턴스를 선택해주세요.</p>
-            <button class="close_btn" onclick="closePopup()">닫기</button>
-        </div>
-    </div>
+    
 </body>
 
 </html>
