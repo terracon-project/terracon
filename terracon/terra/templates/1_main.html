@@ -68,7 +68,7 @@
             executeSelectedAction('start');
             noIns_popup();
         }
-        function noIns_popup(){
+        function noIns_popup() {
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             const targetDiv = document.getElementById('myModal');
 
@@ -106,21 +106,24 @@
                 // }
             }
         }
-
         //인스턴스 미체크 시 팝업창
         function openPopup() {
             document.getElementById('myModal').style.display = 'flex';
         }
-    
+
         function closePopup() {
             document.getElementById('myModal').style.display = 'none';
         }
+        function refreshList() {
+            location.reload(); // 현재 페이지를 다시 로드하여 리스트를 새로고침합니다.
+        }
+        
     </script>
 </head>
 
 <body>
     <h3>Main</h3>
-    <button class="refresh"><img src="{% static 'image/refresh.png' %}" alt="새로고침" onclick=""></button>
+    <button class="refresh"><img src="{% static 'image/refresh.png' %}" alt="새로고침" onclick="refreshList()"></button>
 
     {% csrf_token %}
     <div class="list_area">
@@ -141,7 +144,7 @@
             </div>
             <div>{{ instance.name }}</div>
             <div>{{ instance.id }}</div>
-            <div>{{ instance.state }}</div>
+            <div id="instance_state">{{ instance.state }}</div>
         </div>
         {% endfor %}
 
@@ -171,7 +174,7 @@
         </div>
     </div>
 
-    
+
 </body>
 
 </html>
