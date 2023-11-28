@@ -100,7 +100,7 @@ body{
 .right_box > form > div{
     margin: 0 167px 30px;
 }
-.right_box > form > div > p{
+.right_box > form > div p{
     color: #ffffff;
     font-size: 20px;
 }
@@ -116,6 +116,9 @@ body{
     margin-bottom: 10px;
 }
 .right_box > form > div > input[type="text"]:focus{
+    outline: none;
+}
+.right_box > form > div > input[type="password"]:focus{
     outline: none;
 }
 .combobox{
@@ -148,4 +151,14 @@ body{
 }
 .right_box > form > .start_btn:active{
     transform: scale(0.95);
+}
+.to_img{
+    width: 30px;
+    height: 30px;
+}
+section{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
 }

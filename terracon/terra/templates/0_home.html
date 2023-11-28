@@ -43,6 +43,25 @@
                 alert('파일이 비어 있습니다.');
             }
         }
+
+        //Secret Key 암호화
+        var originalText = ''; // 마스킹하기 전의 원래 문자열을 저장할 변수
+        var isMasked = true; // 마스킹 여부를 나타내는 변수
+
+        function toggleMask() {
+            var input = document.getElementById("secretKeyInput");
+
+            if (isMasked) {
+                originalText = input.value; // 원래 문자열 저장
+                input.type = "text"; // 입력 필드를 텍스트로 변경하여 마스킹 해제
+                document.getElementById("toggleButton").src = "{% static 'image/visible.png' %}"; // 이미지 변경
+            } else {
+                input.type = "password"; // 입력 필드를 다시 비밀번호 타입으로 변경하여 마스킹
+                document.getElementById("toggleButton").src = "{% static 'image/invisible.png' %}"; // 이미지 변경
+            }
+
+            isMasked = !isMasked; // 마스킹 상태를 토글
+        }
     </script>
 </head>
 
@@ -76,17 +95,34 @@
                     <input type="text" id="accessKeyInput" name="aws_access_key" placeholder="">
                 </div>
                 <div>
-                    <p>Secret Key 입력</p>
-                    <input type="text" id="secretKeyInput" name="aws_secret_key" placeholder="">
+                    <section>
+                        <p>Secret Key 입력</p>
+                        <img src="{% static 'image/invisible.png' %}" class="to_img" id="toggleButton" onclick="toggleMask()" style="cursor: pointer;">
+                    </section>
+                    <input type="word" id="secretKeyInput" name="aws_secret_key" placeholder="">
                 </div>
 
                 <div>
                     <p>Region 선택</p>
                     <div class="combobox">
                         <select id="region_detail" name="aws_region">
-                            <option value="ap-northeast-2">ap-northeast-2</option>
-                            <option value="ap-northeast-3">ap-northeast-3</option>
-                            <!-- 다른 리전 옵션들 추가 -->
+                            <option value="option1">미국 동부 버지니아 북부 / us-east-1</option>
+                            <option value="option2">미국 동부 오하이오 / us-east-2</option>
+                            <option value="option3">미국 서부 캘리포니아 / us-west-1</option>
+                            <option value="option4">미국 서부 오레곤 / us-west-2</option>
+                            <option value="option5">아시아 태평양 뭄바이 / ap-south-1</option>
+                            <option value="option6">아시아 태평양 오사카 / ap-northeast-3</option>
+                            <option value="ap-northeast-2" selected>아시아 태평양 서울 / ap-northeast-2</option>
+                            <option value="option8">아시아 태평양 싱가포르 / ap-southeast-1</option>
+                            <option value="option9">아시아 태평양 시드니 / ap-southeast-2</option>
+                            <option value="option10">아시아 태평양 도쿄 / ap-northeast-1</option>
+                            <option value="option11">캐나다 중부 / ca-central-1</option>
+                            <option value="option12">유럽 프랑크푸르트 / eu-central-1</option>
+                            <option value="option13">유럽 아일랜드 / eu-west-1</option>
+                            <option value="option14">유럽 런던 / eu-west-2</option>
+                            <option value="option15">유럽 파리 / eu-west-3</option>
+                            <option value="option16">유럽 스톡홀름 / eu-north-1</option>
+                            <option value="option17">남아메리카 상파울루 / sa-east-1</option>
                         </select>
                     </div>
                 </div>
