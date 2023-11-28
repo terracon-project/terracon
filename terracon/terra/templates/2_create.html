@@ -22,6 +22,7 @@
                     if (extension === 'pem') {
                         // pem 확장자가 맞는 경우 파일 이름을 입력란에 넣기
                         fileNameElement.value = file.name.replace(/\.[^/.]+$/, '');
+                        updateCode();
                     } else {
                         alert('Please select a .pem file');
                         fileNameElement.value = '';
@@ -31,6 +32,52 @@
             // 파일 선택 창 열기
             fileInput.click();
         }
+        function updateCode() {
+            const ami = document.getElementById("ami").value;
+            const instanceType = document.getElementById("ins_type").value;
+            const instanceName = document.getElementById("textbox").value;
+            const keyPairFile = document.getElementById('fileName').value;
+            // 여기서 생성된 코드를 원하는 형식에 맞게 조합하고 codeView 요소에 표시합니다.
+            const code = generateCode(ami, instanceType, instanceName, keyPairFile);// 이 함수는 선택한 옵션에 따라 코드를 생성하는 함수입니다.
+            document.getElementById("codeView").innerHTML = code;
+        }
+
+        // 예시로써, 선택한 옵션에 따라 코드를 생성하는 함수
+        function generateCode(ami, instanceType, instanceName, keyPairFile) {
+            // 여기서 선택된 AMI와 인스턴스 타입을 기반으로 코드를 생성합니다.
+            const terraformCode = `
+resource "aws_instance" "example" {
+    ami = "${ami}"
+    instance_type = "${instanceType}"
+    tags = {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Name = "${instanceName}"
+    }
+    key_name = "${keyPairFile}"
+}
+`;
+            return terraformCode;
+        }
+
+
     </script>
 </head>
 
@@ -47,32 +94,32 @@
                 <div>
                     <input type="file" id="fileInput" style="display: none;">
                     <button class="key_btn" onclick="uploadFile()"></button>
-                    <input class="text_box text1" type="text" id="fileName" placeholder="">
+                    <input class="text_box text1" type="text" id="fileName" placeholder="" oninput="updateCode()">
                 </div>
             </div>
             <div>
                 <p><em>AMI</em> AMI를 생성해 입력해주세요</p>
                 <div class="combobox">
-                    <select id="ami" name="ami">
-                        <option value="ami_1">Amazon Linux 2023 AMI</option>
-                        <option value="ami_2">Amazon Linux 2 AMI</option>
-                        <option value="ami_3">Red Hat Enterprise_linux 9</option>
-                        <option value="ami_4">Ubuntu Server 22.04 LTS</option>
-                        <option value="ami_5">Ubuntu Server 20.04 LTS</option>
+                    <select id="ami" name="ami" onchange="updateCode()">
+                        <option value="ami-01123b84e2a4fba05">Amazon Linux 2023 AMI</option>
+                        <option value="ami-05e02e6210658716f">Amazon Linux 2 AMI</option>
+                        <option value="ami-0036b9a87ceef0688">Red Hat Enterprise_linux 9</option>
+                        <option value="ami-086cae3329a3f7d75">Ubuntu Server 22.04 LTS</option>
+                        <option value="ami-09eb4311cbaecf89d">Ubuntu Server 20.04 LTS</option>
                     </select>
                 </div>
             </div>
             <div>
                 <p><em>Instance</em> 인스턴스 타입을 선택해주세요</p>
                 <div class="combobox">
-                    <select id="ins_type" name="ins_type">
-                        <option value="t2.m">t2.micro(vCPU: 1 / GIB : 1 / 프리티어)</option>
+                    <select id="ins_type" name="ins_type" onchange="updateCode()">
+                        <option value="t2.micro">t2.micro(vCPU: 1 / GIB : 1 / 프리티어)</option>
                     </select>
                 </div>
             </div>
             <div>
                 <p><em>Instance Name</em> 인스턴스 이름을 지정해주세요</p>
-                <input class="text_box text2" type="text" placeholder="type any thing...">
+                <input class="text_box text2" type="text2" id="textbox" placeholder="type any thing..." oninput="updateCode()">
             </div>
             <section>
                 <a href="/terra/main"><input type="image" src="{% static 'image/btn_back.png' %}" alt=""></a>
@@ -84,6 +131,8 @@
             <h3>CODE VIEW</h3>
             <div class="content_box">
                 <img src="{% static 'image/logo_back.png' %}" alt="logo">
+                <pre id="codeView" class="terraform-code">
+                </pre>
                 <!-- CODE VIEW 내용 -->
             </div>
         </div>
