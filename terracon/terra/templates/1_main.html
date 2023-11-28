@@ -106,11 +106,21 @@
                 // }
             }
         }
+
+        //인스턴스 미체크 시 팝업창
+        function openPopup() {
+            document.getElementById('myModal').style.display = 'flex';
+        }
+    
+        function closePopup() {
+            document.getElementById('myModal').style.display = 'none';
+        }
     </script>
 </head>
 
 <body>
     <h3>Main</h3>
+    <button class="refresh"><img src="{% static 'image/refresh.png' %}" alt="새로고침" onclick=""></button>
 
     {% csrf_token %}
     <div class="list_area">
@@ -150,6 +160,15 @@
         <button class="delete_btn" type="button">
             <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="executeSelectedAction('terminate')">
         </button>
+    </div>
+
+    <!-- 모달 팝업 -->
+    <div class="modal_container" id="myModal">
+        <div class="popup">
+            <p>선택된 인스턴스가 없습니다.</p>
+            <p>인스턴스를 선택해주세요.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
     </div>
 
     

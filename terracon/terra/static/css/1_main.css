@@ -87,10 +87,8 @@ div{
     transform: scale(0.95);
 }
 
-
-
-   /* 전체 페이지를 덮는 모달 스타일 */
-   .modal_container {
+/* 전체 페이지를 덮는 모달 스타일 */
+.modal_container {
     display: none;
     position: fixed;
     top: 0;
@@ -100,10 +98,10 @@ div{
     background: rgba(0, 0, 0, 0.8); /* 반투명한 배경 */
     justify-content: center;
     align-items: center;
-  }
+}
 
-  /* 팝업 스타일 */
-  .popup {
+/* 팝업 스타일 */
+.popup {
     background-color: #313131;
     width: 480px;
     height: 380px;
@@ -113,14 +111,33 @@ div{
     border: 3px solid #00A3FF;
     color: #ffffff;
     font-size: 18px;
-  }
+}
 
-  /* 닫기 버튼 스타일 */
-  .close_btn {
+/* 닫기 버튼 스타일 */
+.close_btn {
     background-color: #00A3FF;
     color: #ffffff;
     padding: 10px 20px;
     border: 3px solid #00A3FF;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
+
+/* 새로고침 버튼 */
+.refresh{
+    position: absolute;
+    top: 5%;
+    left: 85%;
+    background-color: #242424;
+    border: 2px solid #00A3FF;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.refresh:active{
+    transform: scale(0.95);
+}
+.refresh > img{
+    width: 50px;
+    height: 50px;
+    margin: 5px 10px;
+}
