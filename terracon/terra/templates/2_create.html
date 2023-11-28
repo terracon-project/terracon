@@ -33,42 +33,35 @@
             fileInput.click();
         }
         function updateCode() {
+            const region = document.getElementById("hiddenregion").value;
             const ami = document.getElementById("ami").value;
             const instanceType = document.getElementById("ins_type").value;
             const instanceName = document.getElementById("textbox").value;
             const keyPairFile = document.getElementById('fileName').value;
             // 여기서 생성된 코드를 원하는 형식에 맞게 조합하고 codeView 요소에 표시합니다.
-            const code = generateCode(ami, instanceType, instanceName, keyPairFile);// 이 함수는 선택한 옵션에 따라 코드를 생성하는 함수입니다.
+            const code = generateCode(region, ami, instanceType, instanceName, keyPairFile);// 이 함수는 선택한 옵션에 따라 코드를 생성하는 함수입니다.
             document.getElementById("codeView").innerHTML = code;
         }
 
         // 예시로써, 선택한 옵션에 따라 코드를 생성하는 함수
-        function generateCode(ami, instanceType, instanceName, keyPairFile) {
+        function generateCode(region, ami, instanceType, instanceName, keyPairFile) {
             // 여기서 선택된 AMI와 인스턴스 타입을 기반으로 코드를 생성합니다.
-            const terraformCode = `
+            const terraformCode = `terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.16"
+    }
+  }
+  required_version = ">= 1.2.0"
+}
+provider "aws" {
+  region     = "${region}"
+}
 resource "aws_instance" "example" {
     ami = "${ami}"
     instance_type = "${instanceType}"
     tags = {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         Name = "${instanceName}"
     }
     key_name = "${keyPairFile}"
@@ -92,6 +85,7 @@ resource "aws_instance" "example" {
                         target="_blank">생성하러 가기 ></a>
                 </div>
                 <div>
+                    <input type="hidden" id="hiddenregion" name="region" value="{{ aws_region }}">
                     <input type="file" id="fileInput" style="display: none;">
                     <button class="key_btn" onclick="uploadFile()"></button>
                     <input class="text_box text1" type="text" id="fileName" placeholder="" oninput="updateCode()">
