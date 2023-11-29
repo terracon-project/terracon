@@ -146,14 +146,14 @@ body{
     position: relative;
     width: 90%;
     height: 80%;
-    background-color: #242424;
     margin: 0 5%;
     border-radius: 20px;
+    background: url(../image/logo_back.png) no-repeat left 90% #242424;
 }
-.right_box > .content_box > img{
+/* .right_box > .content_box > img{
     position: absolute;
     bottom: 5%;
-}
+} */
 
 .terraform-code {
     background-color: #242424;
