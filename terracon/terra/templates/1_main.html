@@ -117,7 +117,24 @@
         function refreshList() {
             location.reload(); // 현재 페이지를 다시 로드하여 리스트를 새로고침합니다.
         }
-        
+
+        //실행 상태의 따른 색 변화
+        var resultElement = document.getElementById('instance_state');
+        // 결과값의 텍스트를 가져옵니다.
+        // var resultText = resultElement.textContent.trim();
+        var resultText = resultElement.textContent.trim();
+        console.log(resultText);
+        // state_color 요소를 가져옵니다.
+        var stateColorDiv = document.getElementById('state_color');
+
+        // 결과값의 텍스트에 따라 배경색을 변경합니다.
+        if (resultText === '실행 중') {
+            stateColorDiv.style.backgroundColor = 'green';
+        } else if (resultText === '진행중') {
+            stateColorDiv.style.backgroundColor = 'yellow';
+        } else if (resultText === '실패') {
+            stateColorDiv.style.backgroundColor = 'red';
+        }
     </script>
 </head>
 
@@ -144,7 +161,10 @@
             </div>
             <div>{{ instance.name }}</div>
             <div>{{ instance.id }}</div>
-            <div id="instance_state">{{ instance.state }}</div>
+            <div id="instance_state">
+                <div id="state_color"></div>
+                {{ instance.state }}
+            </div>
         </div>
         {% endfor %}
 

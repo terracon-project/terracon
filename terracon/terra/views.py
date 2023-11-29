@@ -42,6 +42,18 @@ def main(request):
             for instance in reservation['Instances']:
                 instance_id = instance['InstanceId']
                 instance_state = instance['State']['Name']
+                if(instance['State']['Name'] =='running'):
+                    instance_state = '실행 중'
+                if(instance['State']['Name'] =='pending'):
+                    instance_state = '준비 중'
+                if(instance['State']['Name'] =='stopping'):
+                    instance_state = '중지 중'
+                if(instance['State']['Name'] =='stopped'):
+                    instance_state = '중지 됨'
+                if(instance['State']['Name'] =='shutting-down'):
+                    instance_state = '종료 중'
+                if(instance['State']['Name'] =='terminated'):
+                    instance_state = '종료 됨'                                                                                
 
                 # 이름 정보 가져오기
                 for tag in instance['Tags']:
