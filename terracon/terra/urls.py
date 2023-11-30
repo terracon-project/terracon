@@ -7,4 +7,5 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('view/', views.view, name='view'),
     path('instances_view/',views.instances_view,name='instance'),
+    path('execute_terraform/',views.)
 ]

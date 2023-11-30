@@ -67,9 +67,32 @@ resource "aws_instance" "example" {
     key_name = "${keyPairFile}"
 }
 `;
+            formData = terraformCode;
             return terraformCode;
         }
-
+        function sendtf() {
+            fetch('/execute_terraform/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(data.message); // Success message
+                        // Handle success (if needed)
+                    } else {
+                        console.error(data.message); // Error message
+                        // Handle error (if needed)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Catch fetch errors
+                    // Handle error (if needed)
+                });
+        }
 
     </script>
 </head>
@@ -113,11 +136,12 @@ resource "aws_instance" "example" {
             </div>
             <div>
                 <p><em>Instance Name</em> 인스턴스 이름을 지정해주세요</p>
-                <input class="text_box text2" type="text2" id="textbox" placeholder="type any thing..." oninput="updateCode()">
+                <input class="text_box text2" type="text2" id="textbox" placeholder="type any thing..."
+                    oninput="updateCode()">
             </div>
             <section>
                 <a href="/terra/main"><input type="image" src="{% static 'image/btn_back.png' %}" alt=""></a>
-                <a href="/terra/view"><button class="apply_btn">생성하기</button></a>
+                <a href="/terra/view"><button class="apply_btn" onclick="sendtf()">생성하기</button></a>
             </section>
         </div>
 

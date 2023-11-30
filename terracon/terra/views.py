@@ -1,8 +1,10 @@
+import shutil
+import uuid
 from django.shortcuts import render,redirect
 import boto3
 import botocore
 import subprocess
-from django.http import HttpResponseRedirect
+import os
 from django.http import JsonResponse
 import json
 # def region(request):
@@ -104,6 +106,47 @@ def instances_view(request):
         #     return JsonResponse({'message': str(e)}, status=500)
 
     return JsonResponse({'message': 'Invalid request'}, status=400)
+
+def handle_terraform_request(request):
+    if request.method == 'POST':
+        terraform_content = request.POST.get('terraform_content')  # Assuming 'terraform_content' is the key for data sent from JavaScript
+        unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
+        workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
+        print('hello')
+        os.makedirs(workdir, exist_ok=True)
+        os.chdir(workdir)
+
+        if terraform_content:
+            # Save received content to a main.tf file
+            with open('main.tf', 'w') as file:
+                file.write(terraform_content)
+
+            # Execute Terraform apply using subprocess
+            try: 
+                with open('plan.txt', 'w') as output_file:
+                    subprocess.run(['terraform', 'plan'], stdout=output_file, stderr=subprocess.STDOUT, text=True)
+                # subprocess.run(['terraform', 'apply', '-auto-approve'], check=True)
+                return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
+            except subprocess.CalledProcessError as e:
+                return JsonResponse({'success': False, 'message': f'Terraform apply failed: {e}'})
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
+def execute_terraform(terraform_content):
+    
+
+    with open('main.tf', 'w') as file:
+        file.write(terraform_content)
+    try:
+        subprocess.run(['terraform', 'init'], check=True)
+        with open('plan.txt', 'w') as output_file:
+            subprocess.run(['terraform', 'plan'], stdout=output_file, stderr=subprocess.STDOUT, text=True)
+        # subprocess.run(['terraform', 'apply', '-auto-approve'], check=True)
+
+        # shutil.rmtree(workdir)
+        return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
+    except subprocess.CalledProcessError as e:
+        return JsonResponse({'success': False, 'message': 'Invalid request'})
+    # finally:
+        # shutil.rmtree(workdir, ignore_errors=True)
 
 def create(request):
     aws_region = request.session.get('aws_region')
