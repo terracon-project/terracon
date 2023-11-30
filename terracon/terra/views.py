@@ -51,9 +51,9 @@ def main(request):
                 if(instance['State']['Name'] =='stopped'):
                     instance_state = '중지 됨'
                 if(instance['State']['Name'] =='shutting-down'):
-                    instance_state = '종료 중'
+                    instance_state = '삭제 중'
                 if(instance['State']['Name'] =='terminated'):
-                    instance_state = '종료 됨'                                                                                
+                    instance_state = '삭제 됨'                                                                                
 
                 # 이름 정보 가져오기
                 for tag in instance['Tags']:

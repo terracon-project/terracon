@@ -6,9 +6,9 @@ body{
 /* 체크박스 스타일 지정 */
 input[type="checkbox"] {
  /* 원하는 크기로 지정 (예: 20px) */
-width: 20px;
-height: 20px;
-    }
+    width: 20px;
+    height: 20px;
+}
 
 h3{
     margin-top: 50px;
@@ -32,15 +32,24 @@ div{
     color: #ffffff;
     font-weight: bold;
 }
-.list > div:nth-child(1){ width:100px; }
-.list > div:nth-child(2){ width:400px; }
-.list > div:nth-child(3){ width:700px; }
-.list > div:nth-child(4){ 
+.list > div:nth-child(1){ width:60px; }
+.list > div:nth-child(2){ width:300px; }
+.list > div:nth-child(3){ width:520px; }
+div > div > div:nth-child(3){
+    color: #00A3FF;
+    cursor: pointer;
+}
+div > div > div:nth-child(3):hover{
+    text-decoration: underline;
+}
+.list > div:nth-child(4){ width:300px; }
+.list > div:nth-child(5){ 
     width:220px; 
     display: flex;
     justify-content: center;
     align-items:end;
 }
+
 #state_color{
     background-color: #00A3FF;
     width: 25px;
@@ -99,8 +108,8 @@ div{
     transform: scale(0.95);
 }
 
-/* 전체 페이지를 덮는 모달 스타일 */
-.modal_container {
+/* 뒷배경 날리기 */
+.dark_area {
     display: none;
     position: fixed;
     top: 0;
@@ -112,7 +121,7 @@ div{
     align-items: center;
 }
 
-/* 팝업 스타일 */
+/* 버튼 팝업 */
 .popup {
     background-color: #313131;
     width: 400px;
@@ -129,7 +138,7 @@ div{
     margin-bottom: -10px;
 }
 
-/* 닫기 버튼 스타일 */
+/* 버튼 팝업 닫기 */
 .close_btn {
     background-color: #313131;
     color: #ffffff;
@@ -163,15 +172,42 @@ div{
     margin: 5px 10px;
 }
 
-/* 전체 페이지를 덮는 모달 스타일 */
-.modal_container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* 반투명한 배경 */
-    justify-content: center;
-    align-items: center;
+/* 인스턴스 ID 정보 팝업 */
+.ins_popup {
+    background-color: #313131;
+    width: 1200px;
+    height: 860px;
+    border-radius: 10px;
+    border: 3px solid #00A3FF;
+    color: #ffffff;
+    font-size: 20px;
+    position: relative;
+    margin: 60px auto;
+}
+.ins_popup > h4{
+    text-align: center;
+    color: #00A3FF;
+    margin-top: 50px;
+    font-size: 30px;
+    font-weight: normal;
+}
+.ins_popup > div{
+    background-color: #242424;
+    margin: 0 auto;
+    width: 1100px;
+    height: 600px;
+
+}
+.ins_popup > button{
+    width: 200px;
+    height: 80px;
+    margin-top: 20px;
+    background-color: #313131;
+    color: #ffffff;
+    border: 3px solid #ffffff;
+    border-radius: 10px;
+    font-size: 20px;
+}
+.ins_popup > button:active{
+    transform: scale(0.95);
 }
