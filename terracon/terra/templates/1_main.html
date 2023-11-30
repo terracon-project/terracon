@@ -66,22 +66,18 @@
 
         function startFunctions() {
             executeSelectedAction('start');
-            noIns_popup();
+            handleCheckboxClick_start_btn();
         }
-        function noIns_popup() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            const targetDiv = document.getElementById('myModal');
 
-            let checked = false;
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    checked = true;
-                }
-            });
+        function pauseFunctions() {
+            executeSelectedAction('stop');
+            handleCheckboxClick_pause_btn();
+        }
 
-            if (!checked) {
-                targetDiv.style.display = 'flex';
-            }
+        function deleteFunctions() {
+            executeSelectedAction('terminate');
+            var delete_ok = document.getElementById("ok_delete");
+            delete_ok.style.display = "flex";
         }
 
         //체크박스 전체 선택
@@ -106,12 +102,16 @@
                 // }
             }
         }
+
         //인스턴스 미체크 시 팝업창
-        function openPopup() {
-            document.getElementById('myModal').style.display = 'block';
-        }
         function closePopup() {
-            document.getElementById('myModal').style.display = 'none';
+            document.getElementById('no_check').style.display = 'none';
+            document.getElementById('already_start').style.display = 'none';
+            document.getElementById('ok_start').style.display = 'none';
+            document.getElementById('already_pause').style.display = 'none';
+            document.getElementById('ok_pause').style.display = 'none';
+            document.getElementById('delete_check').style.display = 'none';
+            document.getElementById('ok_delete').style.display = 'none';
         }
         function refreshList() {
             location.reload(); // 현재 페이지를 다시 로드하여 리스트를 새로고침합니다.
@@ -125,7 +125,7 @@
             document.getElementById('insInfo').style.display = 'none';
         }
 
-
+        //인스턴스 상태의 따른 색깔 변화
         document.addEventListener('DOMContentLoaded', function() {
             var resultElements = document.querySelectorAll('#instance_state');
 
@@ -148,6 +148,93 @@
                 }
             });
         });
+
+        function handleCheckboxClick_start_btn(instanceId) {
+            var checkboxes = document.querySelectorAll('.checkboxes');
+            var state1Count = 0;
+            var state2Count = 0;
+
+            const targetDiv1 = document.getElementById('no_check');
+            const targetDiv2 = document.getElementById('already_start');
+            const targetDiv3 = document.getElementById('ok_start');
+
+            checkboxes.forEach(function(checkbox) {
+                var stateElement = checkbox.closest('.list').querySelector('#instance_state');
+                var stateText = stateElement.textContent.trim();
+
+                if (stateText === '실행 중' && checkbox.checked) {
+                    state1Count++;
+                } else if (stateText === '중지 됨' && checkbox.checked) {
+                    state2Count++;
+                }
+            });
+
+            // 조건에 따라 함수 호출
+            if(state2Count > 0){
+                targetDiv3.style.display = 'flex';
+            } else if (state1Count > 0 && state2Count == 0) {
+                targetDiv2.style.display = 'flex';
+            } else if (state1Count == 0 && state2Count == 0) {
+                targetDiv1.style.display = 'flex';
+            }
+        }
+
+        function handleCheckboxClick_pause_btn(instanceId) {
+            var checkboxes = document.querySelectorAll('.checkboxes');
+            var state1Count = 0;
+            var state2Count = 0;
+
+            const targetDiv1 = document.getElementById('no_check');
+            const targetDiv2 = document.getElementById('already_pause');
+            const targetDiv3 = document.getElementById('ok_pause');
+
+            checkboxes.forEach(function(checkbox) {
+                var stateElement = checkbox.closest('.list').querySelector('#instance_state');
+                var stateText = stateElement.textContent.trim();
+
+                if (stateText === '중지 됨' && checkbox.checked) {
+                    state1Count++;
+                } else if (stateText === '실행 중' && checkbox.checked) {
+                    state2Count++;
+                }
+            });
+
+            // 조건에 따라 함수 호출
+            if(state2Count > 0){
+                targetDiv3.style.display = 'flex';
+            } else if (state1Count > 0 && state2Count == 0) {
+                targetDiv2.style.display = 'flex';
+            } else if (state1Count == 0 && state2Count == 0) {
+                targetDiv1.style.display = 'flex';
+            }
+        }
+
+        function handleCheckboxClick_delete_btn(instanceId) {
+            var checkboxes = document.querySelectorAll('.checkboxes');
+            var state1Count = 0;
+            var state2Count = 0;
+
+            const targetDiv1 = document.getElementById('no_check');
+            const targetDiv2 = document.getElementById('delete_check');
+
+            checkboxes.forEach(function(checkbox) {
+                var stateElement = checkbox.closest('.list').querySelector('#instance_state');
+                var stateText = stateElement.textContent.trim();
+
+                if (stateText === '중지 됨' && checkbox.checked) {
+                    state1Count++;
+                } else if (stateText === '실행 중' && checkbox.checked) {
+                    state2Count++;
+                }
+            });
+
+            // 조건에 따라 함수 호출
+            if (state1Count == 0 && state2Count == 0) {
+                targetDiv1.style.display = 'flex';
+            } else {
+                targetDiv2.style.display = 'flex';
+            }
+        }
 
     </script>
 </head>
@@ -194,21 +281,68 @@
             <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="startFunctions()">
         </button>
         <button class="pause_btn" type="button">
-            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="executeSelectedAction('stop')">
+            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="pauseFunctions()">
         </button>
         <button class="delete_btn" type="button">
-            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="executeSelectedAction('terminate')">
+            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="handleCheckboxClick_delete_btn()">
         </button>
     </div>
 
     <!-- 버튼 팝업 -->
-    <div class="dark_area" id="myModal">
+    <div class="dark_area" id="no_check">
         <div class="popup">
             <p>선택된 인스턴스가 없습니다.</p>
             <p>인스턴스를 선택해주세요.</p>
             <button class="close_btn" onclick="closePopup()">닫기</button>
         </div>
     </div>
+
+    <div class="dark_area" id="already_start">
+        <div class="popup">
+            <p>인스턴스가 이미 <em class="S">실행 중</em> 입니다.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
+
+    <div class="dark_area" id="ok_start">
+        <div class="popup">
+            <p>인스턴스가 <em class="S">실행</em> 되었습니다.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
+
+    <div class="dark_area" id="already_pause">
+        <div class="popup">
+            <p>인스턴스가 이미 <em class="P">중지</em> 되어 있습니다.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
+
+    <div class="dark_area" id="ok_pause">
+        <div class="popup">
+            <p>인스턴스가 <em class="P">중지</em> 되었습니다.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
+
+    <div class="dark_area" id="delete_check">
+        <div class="popup">
+            <p>인스턴스를 정말 <em class="D">삭제</em> 하시겠습니까?</p>
+            <div class="delete_check_box">
+                <button class="close_btn_A" onclick="deleteFunctions()">삭제</button>
+                <button class="close_btn_B" onclick="closePopup()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="dark_area" id="ok_delete">
+        <div class="popup">
+            <p>인스턴스가 <em class="D">삭제</em> 되었습니다.</p>
+            <button class="close_btn" onclick="closePopup()">닫기</button>
+        </div>
+    </div>
+
+
     <!-- 인스턴스 ID 팝업 -->
     <div class="dark_area" id="insInfo">
         <div class="ins_popup">

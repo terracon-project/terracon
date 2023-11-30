@@ -137,6 +137,21 @@ div > div > div:nth-child(3):hover{
 .popup > p{
     margin-bottom: -10px;
 }
+.popup > p > em.S{
+    font-style: normal;
+    font-weight: bold;
+    color: #00A3FF;
+}
+.popup > p > em.P{
+    font-style: normal;
+    font-weight: bold;
+    color: #FBB03B;
+}
+.popup > p > em.D{
+    font-style: normal;
+    font-weight: bold;
+    color: #D274FF;
+}
 
 /* 버튼 팝업 닫기 */
 .close_btn {
@@ -148,9 +163,36 @@ div > div > div:nth-child(3):hover{
     border-radius: 5px;
     cursor: pointer;
     position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    left: 33%;
+    bottom: 15%;
+}
+.close_btn:active{
+    transform: scale(0.95);
+}
+
+.delete_check_box > .close_btn_A{
+    background-color: #313131;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 15px 60px;
+    border: 3px solid #00A3FF;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    left: 15%;
+    bottom: 15%;
+}
+.delete_check_box > .close_btn_B{
+    background-color: #313131;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 15px 60px;
+    border: 3px solid #00A3FF;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    right: 15%;
+    bottom: 15%;
 }
 
 /* 새로고침 버튼 */
