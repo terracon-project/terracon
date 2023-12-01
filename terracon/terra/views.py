@@ -155,11 +155,10 @@ def execute_terraform(request):
     if request.method == 'POST':
         received_data = json.loads(request.body)
         terraform_content = received_data.get('terraform')
-
-        unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
-        workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
-
-        os.makedirs(workdir, exist_ok=True)
+        # unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
+        # workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
+        # os.makedirs(workdir, exist_ok=True)
+        workdir = 'terraform_workdir'
         
         # main.tf 파일 생성
         with open(os.path.join(workdir, 'main.tf'), 'w') as file:
@@ -167,13 +166,12 @@ def execute_terraform(request):
        
         try:
             subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            #subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             # process = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             # stdout, stderr = process.communicate()
-            # process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            # stdout, stderr = process.communicate()
-            os.rmdir(workdir)
-            
+            process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            #stdout, stderr = process.communicate()
+            #os.rmdir(workdir)
             # shutil.rmtree(workdir)
             return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
         except subprocess.CalledProcessError as e:
