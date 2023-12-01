@@ -263,7 +263,7 @@
             </div>
             <div>{{ instance.name }}</div>
             <div onclick="openInsPopup()">{{ instance.id }}</div>
-            <div>192.168.0.1<!-- {{ instance.public_ip }} --></div>
+            <div>{{ instance.ipaddr }}</div>
             <div id="instance_state">
                 <div id="state_color"></div>
                 {{ instance.state }}

@@ -24,7 +24,12 @@ def main(request):
         request.session['aws_region'] = aws_region
         request.session['aws_access_key'] = aws_access_key
         request.session['aws_secret_key'] = aws_secret_key
-    
+        
+        command = f'aws configure set aws_access_key_id {aws_access_key} && ' \
+                  f'aws configure set aws_secret_access_key {aws_secret_key} && ' \
+                  f'aws configure set region {aws_region} && ' \
+                  f'aws configure set output json'
+        subprocess.Popen(command, shell=True)
     # AWS SDK를 사용하여 EC2 클라이언트 생성
     try:
         ec2_client = boto3.client(
@@ -33,17 +38,21 @@ def main(request):
             aws_secret_access_key=request.session.get('aws_secret_key'),
             region_name=request.session.get('aws_region')
         )
-        
+
+    # AWS CLI의 aws configure 명령을 실행
 
         # 인스턴스 목록 가져오기
         instances = ec2_client.describe_instances()
 
         # 필요한 정보 추출 (인스턴스 이름, ID, 상태 등)
         instance_info_list = []
-        for reservation in instances['Reservations']:
+        for reservation in instances['Reservations']:                     
             for instance in reservation['Instances']:
-                instance_id = instance['InstanceId']
-                instance_state = instance['State']['Name']
+                try:
+                    ipaddress = instance['PublicIpAddress']
+                except:
+                    ipaddress='-'
+                
                 if(instance['State']['Name'] =='running'):
                     instance_state = '실행 중'
                 if(instance['State']['Name'] =='pending'):
@@ -55,17 +64,17 @@ def main(request):
                 if(instance['State']['Name'] =='shutting-down'):
                     instance_state = '삭제 중'
                 if(instance['State']['Name'] =='terminated'):
-                    instance_state = '삭제 됨'                                                                                
-
+                    continue                              
                 # 이름 정보 가져오기
+                instance_id = instance['InstanceId']
                 for tag in instance['Tags']:
                     if tag['Key'] == 'Name':
                         instance_name = tag['Value']
                         break
                 else:
-                    instance_name = 'N/A'  # 이름이 없는 경우를 대비하여 기본값 설정
+                    instance_name = '-'  # 이름이 없는 경우를 대비하여 기본값 설정
 
-                instance_info_list.append({'id': instance_id, 'name': instance_name, 'state': instance_state})
+                instance_info_list.append({'id': instance_id, 'name': instance_name, 'ipaddr':ipaddress, 'state': instance_state})
     except:
         print('액세스 키 또는 시크릿 키가 잘못되었습니다.')
         return redirect('home')
@@ -143,9 +152,7 @@ def handle_terraform_request(request):
                 return JsonResponse({'success': False, 'message': f'Terraform apply failed: {e}'})
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 def execute_terraform(request):
-    print('hello')
     if request.method == 'POST':
-        print('hello')
         received_data = json.loads(request.body)
         terraform_content = received_data.get('terraform')
 
@@ -153,20 +160,20 @@ def execute_terraform(request):
         workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
 
         os.makedirs(workdir, exist_ok=True)
-
-        with open('main.tf', 'w') as file:
+        
+        # main.tf 파일 생성
+        with open(os.path.join(workdir, 'main.tf'), 'w') as file:
             file.write(terraform_content)
+       
         try:
-            subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            # process = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            # stdout, stderr = process.communicate()
+            # process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            # stdout, stderr = process.communicate()
+            os.rmdir(workdir)
             
-            # print("test1")
-            # with open('plan.txt', 'w') as output_file:
-            #     subprocess.run(['terraform', 'plan'], stdout=output_file, stderr=subprocess.STDOUT, text=True)
-
-            subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            # subprocess.run(['terraform', 'apply', '-auto-approve'], check=True)
-            # subprocess.run(['terraform', 'apply', '-auto-approve'], check=True)
-
             # shutil.rmtree(workdir)
             return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
         except subprocess.CalledProcessError as e:
