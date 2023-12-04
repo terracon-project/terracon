@@ -238,6 +238,23 @@
             }
         }
 
+        //리스트 영역 스크롤
+        const myDiv = document.getElementById('myDiv');
+
+        function checkDivHeight() {
+            const divHeight = myDiv.clientHeight; // div의 현재 높이를 가져옴
+
+            if (divHeight > 300) {
+                myDiv.classList.add('scrollable-div'); // 높이가 300px 이상이면 스크롤 클래스 추가
+            } else {
+                myDiv.classList.remove('scrollable-div'); // 높이가 300px 이하면 스크롤 클래스 제거
+            }
+        }
+
+        // 페이지 로드시와 창 크기 변경시 div 높이 확인
+        window.addEventListener('load', checkDivHeight);
+        window.addEventListener('resize', checkDivHeight);
+
     </script>
 </head>
 
@@ -257,21 +274,23 @@
             <div>상태</div>
         </header>
 
-        {% for instance in instances_info %}
-        <div class="list">
-            <div>
-                <input type="checkbox" class="checkboxes" name="selected_instances" value="{{ instance.id }}"
-                    onclick="handleCheckboxClick('{{ instance.id }}')">
+        <section id="myDiv" class="scrollable-div">
+            {% for instance in instances_info %}
+            <div class="list">
+                <div>
+                    <input type="checkbox" class="checkboxes" name="selected_instances" value="{{ instance.id }}"
+                        onclick="handleCheckboxClick('{{ instance.id }}')">
+                </div>
+                <div>{{ instance.name }}</div>
+                <div onclick="openInsPopup()">{{ instance.id }}</div>
+                <div>{{ instance.ipaddr }}</div>
+                <div id="instance_state">
+                    <div id="state_color"></div>
+                    {{ instance.state }}
+                </div>
             </div>
-            <div>{{ instance.name }}</div>
-            <div onclick="openInsPopup()">{{ instance.id }}</div>
-            <div>{{ instance.ipaddr }}</div>
-            <div id="instance_state">
-                <div id="state_color"></div>
-                {{ instance.state }}
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        </section>
 
         <footer>
             <a href="/terra/create/"><button>+ 생성하기</button></a>

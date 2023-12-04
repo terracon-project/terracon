@@ -57,7 +57,14 @@ div > div > div:nth-child(3):hover{
     border-radius: 100px;
     margin-right: 15px;
 }
-.list_area > div:nth-child(even){
+.list_area > section{
+    margin: 0 auto;
+    width: 1520px;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: overlay;
+}
+.list_area > section > div:nth-child(even){
     background-color: #313131;
 }
 
