@@ -48,10 +48,15 @@ def main(request):
         instance_info_list = []
         for reservation in instances['Reservations']:                     
             for instance in reservation['Instances']:
+                if(instance['PublicDnsName']==''):
+                    instance_public_dns='-'
+                else:
+                    instance_public_dns = instance['PublicDnsName']
+        
                 try:
-                    ipaddress = instance['PublicIpAddress']
+                    instance_public_ip = instance['PublicIpAddress']
                 except:
-                    ipaddress='-'
+                    instance_public_ip='-'
                 
                 if(instance['State']['Name'] =='running'):
                     instance_state = '실행 중'
@@ -67,6 +72,15 @@ def main(request):
                     continue                              
                 # 이름 정보 가져오기
                 instance_id = instance['InstanceId']
+
+                instance_time = instance['LaunchTime']
+                instance_ami = instance['ImageId']
+                instance_type = instance['InstanceType']
+                instance_private_dns = instance['PrivateDnsName']
+                instance_private_ip = instance['PrivateIpAddress']
+                instance_subnet = instance['SubnetId']
+                instance_vpc = instance['VpcId']
+
                 for tag in instance['Tags']:
                     if tag['Key'] == 'Name':
                         instance_name = tag['Value']
@@ -74,7 +88,7 @@ def main(request):
                 else:
                     instance_name = '-'  # 이름이 없는 경우를 대비하여 기본값 설정
 
-                instance_info_list.append({'id': instance_id, 'name': instance_name, 'ipaddr':ipaddress, 'state': instance_state})
+                instance_info_list.append({'id': instance_id, 'name': instance_name, 'public_ip':instance_public_ip, 'state': instance_state, 'time': str(instance_time), 'ami': instance_ami, 'type': instance_type, 'public_dns': instance_public_dns, 'private_dns': instance_private_dns, 'private_ip': instance_private_ip, 'subnet': instance_subnet, 'vpc': instance_vpc});
     except:
         print('액세스 키 또는 시크릿 키가 잘못되었습니다.')
         return redirect('home')

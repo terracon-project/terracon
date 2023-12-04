@@ -119,9 +119,35 @@
             location.reload(); // 현재 페이지를 다시 로드하여 리스트를 새로고침합니다.
         }
 
+        let clickedValue; // 전역 변수로 선언
+
         //인스턴스 정보 팝업창
-        function openInsPopup() {
+        function openInsPopup(instanceSTR) {
+            const instance = JSON.parse(instanceSTR.replace(/'/g, '"'));
             document.getElementById('insInfo').style.display = 'block';
+            overdiv = document.getElementById("overlay");
+            tmp = "<h4>인스턴스 정보</h4>" + 
+            "<div><p><em>Launch Time</em></p>" +
+            "<p>" + instance.time +"</p><br />" +
+            "<p><em>Image ID</em></p>" + 
+            "<p>" + instance.ami +"</p>" + 
+            "<p><em>Instance Type</em></p>" + 
+            "<p>" + instance.type +"</p><br />" +
+            "<p><em>Public Dns Name</em></p>" + 
+            "<p>" + instance.public_dns + "</p>" + 
+            "<p><em>Public IP Address</em></p>" + 
+            "<p>" + instance.public_ip + "</p><br />" +
+            "<p><em>Private Dns Name</em></p>" + 
+            "<p>" + instance.private_dns + "</p>" + 
+            "<p><em>Private IP Address</em></p>" + 
+            "<p>" + instance.private_ip + "</p><br />" + 
+            "<p><em>Subnet ID</em></p>" + 
+            "<p>" + instance.subnet + "</p>" + 
+            "<p><em>Vpc ID</em></p>" + 
+            "<p>" + instance.vpc + "</p></div>";
+            
+            overdiv.innerHTML = tmp + '<button class="close_ins_btn" onclick="closeInsPopup()">닫기</button>';
+                    
         }
         function closeInsPopup() {
             document.getElementById('insInfo').style.display = 'none';
@@ -255,6 +281,7 @@
         window.addEventListener('load', checkDivHeight);
         window.addEventListener('resize', checkDivHeight);
 
+
     </script>
 </head>
 
@@ -282,8 +309,8 @@
                         onclick="handleCheckboxClick('{{ instance.id }}')">
                 </div>
                 <div>{{ instance.name }}</div>
-                <div onclick="openInsPopup()">{{ instance.id }}</div>
-                <div>{{ instance.ipaddr }}</div>
+                <div onclick='openInsPopup("{{instance}}")'>{{ instance.id }}</div>
+                <div>{{ instance.public_ip }}</div>
                 <div id="instance_state">
                     <div id="state_color"></div>
                     {{ instance.state }}
@@ -366,14 +393,41 @@
 
     <!-- 인스턴스 ID 팝업 -->
     <div class="dark_area" id="insInfo">
-        <div class="ins_popup">
-            <h4>인스턴스 정보</h4>
+        <div class="ins_popup" id="overlay">
+            <!-- <h4>인스턴스 정보</h4> -->
 
-            <div>
-                <!-- 인스턴스 상세내용 정보 -->
-            </div>
+            <!-- {% for instance in instances_info %} -->
+            <!-- <p>{{ instance.id }}</p> -->
+                <!-- {% if  instance.id  == clickedValue %}
+                <div>
+                    
+                    <p><em>Launch Time</em></p>
+                    <p>{{ instance.time }}</p>
+                    <br />
+                    <p><em>Image ID</em></p>
+                    <p>{{ instance.ami }}</p>
+                    <p><em>Instance Type</em></p>
+                    <p>{{ instance.type }}</p>
+                    <br />
+                    <p><em>Public Dns Name</em></p>
+                    <p>{{ instance.public_dns }}</p>
+                    <p><em>Public IP Address</em></p>
+                    <p>{{ instance.public_ip }}</p>
+                    <br />
+                    <p><em>Private Dns Name</em></p>
+                    <p>{{ instance.private_dns }}</p>
+                    <p><em>Private IP Address</em></p>
+                    <p>{{ instance.private_ip }}</p>
+                    <br />
+                    <p><em>Subnet ID</em></p>
+                    <p>{{ instance.subnet }}</p>
+                    <p><em>Vpc ID</em></p>
+                    <p>{{ instance.vpc }}</p>
+                </div>
+                {% endif %}
+            {% endfor %}
 
-            <button class="close_ins_btn" onclick="closeInsPopup()">닫기</button>
+            <button class="close_ins_btn" onclick="closeInsPopup()">닫기</button> -->
         </div>
     </div>
 
