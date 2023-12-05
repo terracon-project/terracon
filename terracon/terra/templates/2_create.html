@@ -73,6 +73,7 @@ resource "aws_instance" "example" {
         }
         function sendtf() {
             formData = updateCode();
+            window.location.href = '/terra/main/';
             fetch('/terra/execute_terraform/', {
                 method: 'POST',
                 headers: {
@@ -85,7 +86,6 @@ resource "aws_instance" "example" {
                 .then(data => {
                     if (data.success) {
                         console.log(data.message); // Success message
-                        window.location.href = '/terra/main/';
                         // Handle success (if needed)
                     } else {
                         console.error(data.message); // Error message
@@ -96,6 +96,7 @@ resource "aws_instance" "example" {
                     console.error('Error:', error); // Catch fetch errors
                     // Handle error (if needed)
                 });
+            
         }
         function getCookie(name) {
             let cookieValue = null;

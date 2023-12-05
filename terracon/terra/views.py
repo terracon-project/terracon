@@ -1,4 +1,5 @@
 import shutil
+import time
 import uuid
 from django.shortcuts import render,redirect
 import boto3
@@ -13,7 +14,12 @@ import json
 
 def home(request):
     return render(request,'0_home.html')
-
+def key_login(aws_access_key, aws_secret_key, aws_region):
+    command = f'aws configure set aws_access_key_id {aws_access_key} && ' \
+              f'aws configure set aws_secret_access_key {aws_secret_key} && ' \
+              f'aws configure set region {aws_region} && ' \
+              f'aws configure set output json'
+    subprocess.Popen(command, shell=True)
 def main(request):
     
     # 사용자로부터 입력 받은 AWS 액세스 키, 시크릿 키, 리전 정보
@@ -24,12 +30,7 @@ def main(request):
         request.session['aws_region'] = aws_region
         request.session['aws_access_key'] = aws_access_key
         request.session['aws_secret_key'] = aws_secret_key
-        
-        command = f'aws configure set aws_access_key_id {aws_access_key} && ' \
-                  f'aws configure set aws_secret_access_key {aws_secret_key} && ' \
-                  f'aws configure set region {aws_region} && ' \
-                  f'aws configure set output json'
-        subprocess.Popen(command, shell=True)
+        key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
     # AWS SDK를 사용하여 EC2 클라이언트 생성
     try:
         ec2_client = boto3.client(
@@ -147,7 +148,7 @@ def handle_terraform_request(request):
         terraform_content = request.POST.get('terraform_content')  # Assuming 'terraform_content' is the key for data sent from JavaScript
         unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
         workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
-        print('hello')
+        key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
         os.makedirs(workdir, exist_ok=True)
         os.chdir(workdir)
 
@@ -169,29 +170,25 @@ def execute_terraform(request):
     if request.method == 'POST':
         received_data = json.loads(request.body)
         terraform_content = received_data.get('terraform')
-        # unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
-        # workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
-        # os.makedirs(workdir, exist_ok=True)
-        workdir = 'terraform_workdir'
-        
+        unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
+        workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
+        os.makedirs(workdir, exist_ok=True)
         # main.tf 파일 생성
         with open(os.path.join(workdir, 'main.tf'), 'w') as file:
             file.write(terraform_content)
-       
         try:
             subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             #subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             # process = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             # stdout, stderr = process.communicate()
             process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            #stdout, stderr = process.communicate()
-            #os.rmdir(workdir)
-            # shutil.rmtree(workdir)
+            time.sleep(1)
+            stdout, stderr = process.communicate()
             return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
         except subprocess.CalledProcessError as e:
             return JsonResponse({'success': False, 'message': 'Invalid request'})
-        # finally:
-            # shutil.rmtree(workdir, ignore_errors=True)
+        finally:
+            shutil.rmtree(workdir, ignore_errors=True)
 
 def create(request):
     aws_region = request.session.get('aws_region')
