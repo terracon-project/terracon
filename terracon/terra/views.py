@@ -12,12 +12,12 @@ import json
 def home(request):
     return render(request,'0_home.html')
 def key_login(aws_access_key, aws_secret_key, aws_region):
+
     command = f'aws configure set aws_access_key_id {aws_access_key} && ' \
               f'aws configure set aws_secret_access_key {aws_secret_key} && ' \
               f'aws configure set region {aws_region} && ' \
               f'aws configure set output json'
     subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
-    # stdout, stderr = process.communicate()
 def main(request):
     
     # 사용자로부터 입력 받은 AWS 액세스 키, 시크릿 키, 리전 정보
@@ -138,19 +138,19 @@ def execute_terraform(request):
         with open(os.path.join(workdir, 'main.tf'), 'w') as file:
             file.write(terraform_content)
         try:
-            #subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            #subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir, check=True)
+            time.sleep(1)
             # proc = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             # stdout, stderr = proc.communicate()
             # process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir, check=True)
-            process = subprocess.Popen(['terraform', 'apply', '-auto-approve', '-parallelism=10'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            stdout, stderr = process.communicate()
-            return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
+            # subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            # process = subprocess.Popen(['terraform', 'apply', '-auto-approve', '-parallelism=10'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
         except subprocess.CalledProcessError as e:
             return JsonResponse({'success': False, 'message': 'Invalid request'})
         finally:
             shutil.rmtree(workdir, ignore_errors=True)
+    return JsonResponse({'success': True, 'message': 'Terraform apply completed successfully.'})
 
 def create(request):
     aws_region = request.session.get('aws_region')
