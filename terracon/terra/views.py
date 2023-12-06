@@ -31,7 +31,7 @@ def main(request):
         request.session['aws_region'] = aws_region
         request.session['aws_access_key'] = aws_access_key
         request.session['aws_secret_key'] = aws_secret_key
-        key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
+        #key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
     # AWS SDK를 사용하여 EC2 클라이언트 생성
     try:
         ec2_client = boto3.client(
