@@ -8,9 +8,6 @@ import subprocess
 import os
 from django.http import JsonResponse
 import json
-# def region(request):
-#     tfstr = "스트링 제대로 처리 되나요"
-#     return render(request,'1_1_region.html',{'tfstring' : tfstr})
 
 def home(request):
     return render(request,'0_home.html')
@@ -19,8 +16,8 @@ def key_login(aws_access_key, aws_secret_key, aws_region):
               f'aws configure set aws_secret_access_key {aws_secret_key} && ' \
               f'aws configure set region {aws_region} && ' \
               f'aws configure set output json'
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    stdout, stderr = process.communicate()
+    subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+    # stdout, stderr = process.communicate()
 def main(request):
     
     # 사용자로부터 입력 받은 AWS 액세스 키, 시크릿 키, 리전 정보
@@ -122,68 +119,33 @@ def instances_view(request):
                 ec2.terminate_instances(InstanceIds=instance_ids)
             else:
                 return {'message': 'Invalid action'}, 400
-
-            return {'message': 'Success'}
+            return JsonResponse({'message': 'Success'})
 
         except Exception as e:
-            return {'message': str(e)}, 500
-        # AWS 인스턴스 제어
-        # try:
-        #     if action == 'start':
-        #             subprocess.run(f"aws ec2 start-instances --instance-ids {instance_ids_str}", shell=True)
-        #     elif action == 'stop':
-        #             subprocess.run(f"aws ec2 stop-instances --instance-ids {instance_ids_str}", shell=True)
-        #     elif action == 'terminate':
-        #             subprocess.run(f"aws ec2 terminate-instances --instance-ids {instance_ids_str}", shell=True)
-        #     else:
-        #         return JsonResponse({'message': 'Invalid action'}, status=400)
-
-        #     return JsonResponse({'message': 'Success'})
-        # except Exception as e:
-        #     return JsonResponse({'message': str(e)}, status=500)
-
+            return JsonResponse({'message': str(e)}, status=500)
+    
     return JsonResponse({'message': 'Invalid request'}, status=400)
 
-def handle_terraform_request(request):
-    if request.method == 'POST':
-        terraform_content = request.POST.get('terraform_content')  # Assuming 'terraform_content' is the key for data sent from JavaScript
-        unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
-        workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
-        key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
-        os.makedirs(workdir, exist_ok=True)
-        os.chdir(workdir)
-
-        if terraform_content:
-            # Save received content to a main.tf file
-            with open('main.tf', 'w') as file:
-                file.write(terraform_content)
-
-            # Execute Terraform apply using subprocess
-            try: 
-                with open('plan.txt', 'w') as output_file:
-                    subprocess.run(['terraform', 'plan'], stdout=output_file, stderr=subprocess.STDOUT, text=True)
-                # subprocess.run(['terraform', 'apply', '-auto-approve'], check=True)
-                return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
-            except subprocess.CalledProcessError as e:
-                return JsonResponse({'success': False, 'message': f'Terraform apply failed: {e}'})
-    return JsonResponse({'success': False, 'message': 'Invalid request'})
 def execute_terraform(request):
     if request.method == 'POST':
         received_data = json.loads(request.body)
         terraform_content = received_data.get('terraform')
         unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
         workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
+        print(request.session.get('aws_access_key'))
+        key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
         os.makedirs(workdir, exist_ok=True)
         # main.tf 파일 생성
         with open(os.path.join(workdir, 'main.tf'), 'w') as file:
             file.write(terraform_content)
         try:
-            subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            #subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             #subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            # process = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            # stdout, stderr = process.communicate()
-            process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            time.sleep(1)
+            # proc = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            # stdout, stderr = proc.communicate()
+            # process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
+            subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir, check=True)
+            process = subprocess.Popen(['terraform', 'apply', '-auto-approve', '-parallelism=10'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             stdout, stderr = process.communicate()
             return JsonResponse({'success': True, 'message': 'Terraform plan completed successfully.'})
         except subprocess.CalledProcessError as e:
