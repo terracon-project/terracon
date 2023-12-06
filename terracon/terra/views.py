@@ -132,7 +132,6 @@ def execute_terraform(request):
         terraform_content = received_data.get('terraform')
         unique_id = str(uuid.uuid4())[:8]  # 8자리의 UUID 생성
         workdir = f'terraform_workdir_{unique_id}'  # 폴더 이름에 UUID 추가
-        print(request.session.get('aws_access_key'))
         key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
         os.makedirs(workdir, exist_ok=True)
         # main.tf 파일 생성
