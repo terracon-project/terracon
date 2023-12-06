@@ -49,16 +49,25 @@
         var originalText = ''; // 마스킹하기 전의 원래 문자열을 저장할 변수
         var isMasked = true; // 마스킹 여부를 나타내는 변수
 
-        function toggleMask() {
-            var input = document.getElementById("secretKeyInput");
+        function toggleMask(type) {
+            var input, id;
+            if(type=='access')
+            {
+                input = document.getElementById("accessKeyInput");
+                id = "toggleButton1"
+            }
+            else{   
+                input = document.getElementById("secretKeyInput");
+                id = "toggleButton2"
+            }
 
             if (isMasked) {
-                originalText = input.value; // 원래 문자열 저장
+                //originalText = input.value; // 원래 문자열 저장
                 input.type = "text"; // 입력 필드를 텍스트로 변경하여 마스킹 해제
-                document.getElementById("toggleButton").src = "{% static 'image/visible.png' %}"; // 이미지 변경
+                document.getElementById(id).src = "{% static 'image/visible.png' %}"; // 이미지 변경
             } else {
                 input.type = "password"; // 입력 필드를 다시 비밀번호 타입으로 변경하여 마스킹
-                document.getElementById("toggleButton").src = "{% static 'image/invisible.png' %}"; // 이미지 변경
+                document.getElementById(id).src = "{% static 'image/invisible.png' %}"; // 이미지 변경
             }
 
             isMasked = !isMasked; // 마스킹 상태를 토글
@@ -92,38 +101,41 @@
             <form method="POST" action="/terra/main/"> <!-- List로 Access Key / Secret Key 정보 전달 -->
                 {% csrf_token %}
                 <div>
+                    <section>
                     <p>Access Key 입력</p>
-                    <input type="text" id="accessKeyInput" name="aws_access_key" placeholder="">
+                    <img src="{% static 'image/invisible.png' %}" class="to_img" id="toggleButton1" onclick="toggleMask('access')" style="cursor: pointer;">
+                    </section>
+                    <input type="password" id="accessKeyInput" name="aws_access_key" placeholder="" autocomplete="off">
                 </div>
                 <div>
                     <section>
                         <p>Secret Key 입력</p>
-                        <img src="{% static 'image/invisible.png' %}" class="to_img" id="toggleButton" onclick="toggleMask()" style="cursor: pointer;">
+                        <img src="{% static 'image/invisible.png' %}" class="to_img" id="toggleButton2" onclick="toggleMask('secret')" style="cursor: pointer;">
                     </section>
-                    <input type="password" id="secretKeyInput" name="aws_secret_key" placeholder="">
+                    <input type="password" id="secretKeyInput" name="aws_secret_key" placeholder="" autocomplete="off">
                 </div>
 
                 <div>
                     <p>Region 선택</p>
                     <div class="combobox">
                         <select id="region_detail" name="aws_region">
-                            <option value="option1">미국 동부 버지니아 북부 / us-east-1</option>
-                            <option value="option2">미국 동부 오하이오 / us-east-2</option>
-                            <option value="option3">미국 서부 캘리포니아 / us-west-1</option>
-                            <option value="option4">미국 서부 오레곤 / us-west-2</option>
-                            <option value="option5">아시아 태평양 뭄바이 / ap-south-1</option>
-                            <option value="option6">아시아 태평양 오사카 / ap-northeast-3</option>
+                            <option value="us-east-1">미국 동부 버지니아 북부 / us-east-1</option>
+                            <option value="us-east-2">미국 동부 오하이오 / us-east-2</option>
+                            <option value="us-west-1">미국 서부 캘리포니아 / us-west-1</option>
+                            <option value="us-west-2">미국 서부 오레곤 / us-west-2</option>
+                            <option value="ap-south-1">아시아 태평양 뭄바이 / ap-south-1</option>
+                            <option value="ap-northeast-3">아시아 태평양 오사카 / ap-northeast-3</option>
                             <option value="ap-northeast-2" selected>아시아 태평양 서울 / ap-northeast-2</option>
-                            <option value="option8">아시아 태평양 싱가포르 / ap-southeast-1</option>
-                            <option value="option9">아시아 태평양 시드니 / ap-southeast-2</option>
-                            <option value="option10">아시아 태평양 도쿄 / ap-northeast-1</option>
-                            <option value="option11">캐나다 중부 / ca-central-1</option>
-                            <option value="option12">유럽 프랑크푸르트 / eu-central-1</option>
-                            <option value="option13">유럽 아일랜드 / eu-west-1</option>
-                            <option value="option14">유럽 런던 / eu-west-2</option>
-                            <option value="option15">유럽 파리 / eu-west-3</option>
-                            <option value="option16">유럽 스톡홀름 / eu-north-1</option>
-                            <option value="option17">남아메리카 상파울루 / sa-east-1</option>
+                            <option value="ap-southeast-1">아시아 태평양 싱가포르 / ap-southeast-1</option>
+                            <option value="ap-southeast-2">아시아 태평양 시드니 / ap-southeast-2</option>
+                            <option value="ap-northeast-1">아시아 태평양 도쿄 / ap-northeast-1</option>
+                            <option value="ca-central-1">캐나다 중부 / ca-central-1</option>
+                            <option value="eu-central-1">유럽 프랑크푸르트 / eu-central-1</option>
+                            <option value="eu-west-1">유럽 아일랜드 / eu-west-1</option>
+                            <option value="eu-west-2">유럽 런던 / eu-west-2</option>
+                            <option value="eu-west-3">유럽 파리 / eu-west-3</option>
+                            <option value="eu-north-1">유럽 스톡홀름 / eu-north-1</option>
+                            <option value="sa-east-1">남아메리카 상파울루 / sa-east-1</option>
                         </select>
                     </div>
                 </div>

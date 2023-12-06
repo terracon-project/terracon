@@ -19,7 +19,8 @@ def key_login(aws_access_key, aws_secret_key, aws_region):
               f'aws configure set aws_secret_access_key {aws_secret_key} && ' \
               f'aws configure set region {aws_region} && ' \
               f'aws configure set output json'
-    subprocess.Popen(command, shell=True)
+    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
 def main(request):
     
     # 사용자로부터 입력 받은 AWS 액세스 키, 시크릿 키, 리전 정보
