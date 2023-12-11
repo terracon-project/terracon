@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from terra import views
 urlpatterns = [
+    path('', views.home,name='terra_home'),
     path('admin/', admin.site.urls),
     path('terra/',include('terra.urls')),
 ]
