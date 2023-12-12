@@ -31,7 +31,6 @@ def main(request):
         #key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
     # AWS SDK를 사용하여 EC2 클라이언트 생성
     try:
-        print(request.session.get('aws_access_key'),)
         ec2_client = boto3.client(
         'ec2',
             aws_access_key_id=request.session.get('aws_access_key'),
