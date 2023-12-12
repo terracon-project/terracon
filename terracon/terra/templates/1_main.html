@@ -67,19 +67,19 @@
             return cookieValue;
         }
 
-        function startFunctions() {
-            executeSelectedAction('start');
-            handleCheckboxClick_start_btn();
-        }
+        // function startFunctions() {
+        //     executeSelectedAction('start');
+        // }
 
-        function pauseFunctions() {
-            executeSelectedAction('stop');
-            handleCheckboxClick_pause_btn();
-        }
+        // function pauseFunctions() {
+        //     executeSelectedAction('stop');
+        //     handleCheckboxClick_pause_btn();
+        // }
 
         function deleteFunctions() {
             executeSelectedAction('terminate');
             var delete_ok = document.getElementById("ok_delete");
+            document.getElementById("delete_check").style.display="none";
             delete_ok.style.display = "flex";
         }
 
@@ -119,7 +119,6 @@
         function refreshList() {
             location.reload(); // 현재 페이지를 다시 로드하여 리스트를 새로고침합니다.
         }
-        reload()
         let clickedValue; // 전역 변수로 선언
 
         //인스턴스 정보 팝업창
@@ -127,45 +126,44 @@
             const instance = JSON.parse(instanceSTR.replace(/'/g, '"'));
             document.getElementById('insInfo').style.display = 'block';
             overdiv = document.getElementById("overlay");
-            tmp = "<h4>인스턴스 정보</h4>" + 
-            "<div><p><em>Launch Time</em></p>" +
-            "<p>" + instance.time +"</p><br />" +
-            "<p><em>Image ID</em></p>" + 
-            "<p>" + instance.ami +"</p>" + 
-            "<p><em>Instance Type</em></p>" + 
-            "<p>" + instance.type +"</p><br />" +
-            "<p><em>Public Dns Name</em></p>" + 
-            "<p>" + instance.public_dns + "</p>" + 
-            "<p><em>Public IP Address</em></p>" + 
-            "<p>" + instance.public_ip + "</p><br />" +
-            "<p><em>Private Dns Name</em></p>" + 
-            "<p>" + instance.private_dns + "</p>" + 
-            "<p><em>Private IP Address</em></p>" + 
-            "<p>" + instance.private_ip + "</p><br />" + 
-            "<p><em>Subnet ID</em></p>" + 
-            "<p>" + instance.subnet + "</p>" + 
-            "<p><em>Vpc ID</em></p>" + 
-            "<p>" + instance.vpc + "</p></div>";
-            
+            tmp = "<h4>인스턴스 정보</h4>" +
+                "<div><p><em>Launch Time</em></p>" +
+                "<p>" + instance.time + "</p><br />" +
+                "<p><em>Image ID</em></p>" +
+                "<p>" + instance.ami + "</p>" +
+                "<p><em>Instance Type</em></p>" +
+                "<p>" + instance.type + "</p><br />" +
+                "<p><em>Public Dns Name</em></p>" +
+                "<p>" + instance.public_dns + "</p>" +
+                "<p><em>Public IP Address</em></p>" +
+                "<p>" + instance.public_ip + "</p><br />" +
+                "<p><em>Private Dns Name</em></p>" +
+                "<p>" + instance.private_dns + "</p>" +
+                "<p><em>Private IP Address</em></p>" +
+                "<p>" + instance.private_ip + "</p><br />" +
+                "<p><em>Subnet ID</em></p>" +
+                "<p>" + instance.subnet + "</p>" +
+                "<p><em>Vpc ID</em></p>" +
+                "<p>" + instance.vpc + "</p></div>";
+
             overdiv.innerHTML = tmp + '<button class="close_ins_btn" onclick="closeInsPopup()">닫기</button>';
-                    
+
         }
         function closeInsPopup() {
             document.getElementById('insInfo').style.display = 'none';
         }
 
         //인스턴스 상태의 따른 색깔 변화
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var resultElements = document.querySelectorAll('#instance_state');
 
-            resultElements.forEach(function(resultElement) {
+            resultElements.forEach(function (resultElement) {
                 var resultText = resultElement.textContent.trim();
                 var stateColorDiv = resultElement.querySelector('#state_color');
-
                 if (resultText === '실행 중') {
                     stateColorDiv.style.backgroundColor = '#00A3FF';
                 } else if (resultText === '준비 중') {
-                stateColorDiv.style.backgroundColor = '#00A3FF';
+                    stateColorDiv.style.backgroundColor = '#00A3FF';
                 } else if (resultText === '중지 중') {
                     stateColorDiv.style.backgroundColor = '#FBB03B';
                 } else if (resultText === '중지 됨') {
@@ -175,102 +173,161 @@
                 } else if (resultText === '삭제 됨') {
                     stateColorDiv.style.backgroundColor = '#D274FF  ';
                 }
-
-                console.log(resultText);
             });
         });
-
-        function handleCheckboxClick_start_btn(instanceId) {
+        function handleCheckbox(btnType) {
             var checkboxes = document.querySelectorAll('.checkboxes');
             var state1Count = 0;
             var state2Count = 0;
 
-            const targetDiv1 = document.getElementById('no_check');
-            const targetDiv2 = document.getElementById('already_start');
-            const targetDiv3 = document.getElementById('ok_start');
+            var targetDiv1, targetDiv2, targetDiv3;
 
-            checkboxes.forEach(function(checkbox) {
-                var stateElement = checkbox.closest('.list').querySelector('#instance_state');
-                var stateText = stateElement.textContent.trim();
-
-                if (stateText === '실행 중' && checkbox.checked) {
-                    state1Count++;
-                } else if (stateText === '중지 됨' && checkbox.checked) {
-                    state2Count++;
-                }
-            });
-
-            // 조건에 따라 함수 호출
-            if(state2Count > 0){
-                targetDiv3.style.display = 'flex';
-            } else if (state1Count > 0 && state2Count == 0) {
-                targetDiv2.style.display = 'flex';
-            } else if (state1Count == 0 && state2Count == 0) {
-                targetDiv1.style.display = 'flex';
+            switch (btnType) {
+                case 'start':
+                    targetDiv1 = document.getElementById('no_check');
+                    targetDiv2 = document.getElementById('already_start');
+                    targetDiv3 = document.getElementById('ok_start');
+                    break;
+                case 'stop':
+                    targetDiv1 = document.getElementById('no_check');
+                    targetDiv2 = document.getElementById('already_pause');
+                    targetDiv3 = document.getElementById('ok_pause');
+                    break;
+                case 'terminate':
+                    targetDiv1 = document.getElementById('no_check');
+                    targetDiv2 = document.getElementById('delete_check');
+                    break;
+                default:
+                    break;
             }
-        }
 
-        function handleCheckboxClick_pause_btn(instanceId) {
-            var checkboxes = document.querySelectorAll('.checkboxes');
-            var state1Count = 0;
-            var state2Count = 0;
-
-            const targetDiv1 = document.getElementById('no_check');
-            const targetDiv2 = document.getElementById('already_pause');
-            const targetDiv3 = document.getElementById('ok_pause');
-
-            checkboxes.forEach(function(checkbox) {
+            checkboxes.forEach(function (checkbox) {
                 var stateElement = checkbox.closest('.list').querySelector('#instance_state');
                 var stateText = stateElement.textContent.trim();
 
-                if (stateText === '중지 됨' && checkbox.checked) {
-                    state1Count++;
-                } else if (stateText === '실행 중' && checkbox.checked) {
-                    state2Count++;
+                if ((btnType === 'start' && stateText === '실행 중') ||
+                    (btnType === 'stop' && stateText === '중지 됨')||btnType==='terminate')  {
+                    if (checkbox.checked) {
+                        state1Count++;
+                    }
+                } else if ((btnType === 'start' && stateText === '중지 됨') ||
+                    (btnType === 'stop' && stateText === '실행 중')||btnType==='terminate') {
+                    if (checkbox.checked) {
+                        state2Count++;
+                    }
                 }
             });
-
+            if(btnType!='terminate')
+                executeSelectedAction(btnType);
             // 조건에 따라 함수 호출
-            if(state2Count > 0){
-                targetDiv3.style.display = 'flex';
-            } else if (state1Count > 0 && state2Count == 0) {
-                targetDiv2.style.display = 'flex';
-            } else if (state1Count == 0 && state2Count == 0) {
-                targetDiv1.style.display = 'flex';
-            }
-        }
-
-        function handleCheckboxClick_delete_btn(instanceId) {
-            var checkboxes = document.querySelectorAll('.checkboxes');
-            var state1Count = 0;
-            var state2Count = 0;
-
-            const targetDiv1 = document.getElementById('no_check');
-            const targetDiv2 = document.getElementById('delete_check');
-
-            checkboxes.forEach(function(checkbox) {
-                var stateElement = checkbox.closest('.list').querySelector('#instance_state');
-                var stateText = stateElement.textContent.trim();
-
-                if (stateText === '중지 됨' && checkbox.checked) {
-                    state1Count++;
-                } else if (stateText === '실행 중' && checkbox.checked) {
-                    state2Count++;
+            if (targetDiv3) {
+                if (state2Count > 0) {
+                    targetDiv3.style.display = 'flex';
+                } else if (state1Count > 0 && state2Count === 0) {
+                    targetDiv2.style.display = 'flex';
+                } else if (state1Count === 0 && state2Count === 0) {
+                    targetDiv1.style.display = 'flex';
                 }
-            });
-
-            // 조건에 따라 함수 호출
-            if (state1Count == 0 && state2Count == 0) {
-                targetDiv1.style.display = 'flex';
             } else {
-                targetDiv2.style.display = 'flex';
+                if (state1Count === 0 && state2Count === 0) {
+                    targetDiv1.style.display = 'flex';
+                } else {
+                    targetDiv2.style.display = 'flex';
+                }
             }
         }
+
+        // function handleCheckboxClick_start_btn(instanceId) {
+        //     var checkboxes = document.querySelectorAll('.checkboxes');
+        //     var state1Count = 0;
+        //     var state2Count = 0;
+
+        //     const targetDiv1 = document.getElementById('no_check');
+        //     const targetDiv2 = document.getElementById('already_start');
+        //     const targetDiv3 = document.getElementById('ok_start');
+
+        //     checkboxes.forEach(function (checkbox) {
+        //         var stateElement = checkbox.closest('.list').querySelector('#instance_state');
+        //         var stateText = stateElement.textContent.trim();
+
+        //         if (stateText === '실행 중' && checkbox.checked) {
+        //             state1Count++;
+        //         } else if (stateText === '중지 됨' && checkbox.checked) {
+        //             state2Count++;
+        //         }
+        //     });
+
+        //     // 조건에 따라 함수 호출
+        //     if (state2Count > 0) {
+        //         targetDiv3.style.display = 'flex';
+        //     } else if (state1Count > 0 && state2Count == 0) {
+        //         targetDiv2.style.display = 'flex';
+        //     } else if (state1Count == 0 && state2Count == 0) {
+        //         targetDiv1.style.display = 'flex';
+        //     }
+        // }
+
+        // function handleCheckboxClick_pause_btn(instanceId) {
+        //     var checkboxes = document.querySelectorAll('.checkboxes');
+        //     var state1Count = 0;
+        //     var state2Count = 0;
+
+        //     const targetDiv1 = document.getElementById('no_check');
+        //     const targetDiv2 = document.getElementById('already_pause');
+        //     const targetDiv3 = document.getElementById('ok_pause');
+
+        //     checkboxes.forEach(function (checkbox) {
+        //         var stateElement = checkbox.closest('.list').querySelector('#instance_state');
+        //         var stateText = stateElement.textContent.trim();
+
+        //         if (stateText === '중지 됨' && checkbox.checked) {
+        //             state1Count++;
+        //         } else if (stateText === '실행 중' && checkbox.checked) {
+        //             state2Count++;
+        //         }
+        //     });
+
+        //     // 조건에 따라 함수 호출
+        //     if (state2Count > 0) {
+        //         targetDiv3.style.display = 'flex';
+        //     } else if (state1Count > 0 && state2Count == 0) {
+        //         targetDiv2.style.display = 'flex';
+        //     } else if (state1Count == 0 && state2Count == 0) {
+        //         targetDiv1.style.display = 'flex';
+        //     }
+        // }
+
+        // function handleCheckboxClick_delete_btn(instanceId) {
+        //     var checkboxes = document.querySelectorAll('.checkboxes');
+        //     var state1Count = 0;
+        //     var state2Count = 0;
+
+        //     const targetDiv1 = document.getElementById('no_check');
+        //     const targetDiv2 = document.getElementById('delete_check');
+
+        //     checkboxes.forEach(function (checkbox) {
+        //         var stateElement = checkbox.closest('.list').querySelector('#instance_state');
+        //         var stateText = stateElement.textContent.trim();
+
+        //         if (stateText === '중지 됨' && checkbox.checked) {
+        //             state1Count++;
+        //         } else if (stateText === '실행 중' && checkbox.checked) {
+        //             state2Count++;
+        //         }
+        //     });
+
+        //     // 조건에 따라 함수 호출
+        //     if (state1Count == 0 && state2Count == 0) {
+        //         targetDiv1.style.display = 'flex';
+        //     } else {
+        //         targetDiv2.style.display = 'flex';
+        //     }
+        // }
 
         //리스트 영역 스크롤
-        const myDiv = document.getElementById('myDiv');
 
         function checkDivHeight() {
+            const myDiv = document.getElementById('myDiv');
             const divHeight = myDiv.clientHeight; // div의 현재 높이를 가져옴
 
             if (divHeight > 300) {
@@ -329,13 +386,13 @@
 
     <div class="btn_box">
         <button class="play_btn" type="button">
-            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="startFunctions()">
+            <img src="{% static 'image/btn_play.png' %}" alt="실행하기" onclick="handleCheckbox('start')">
         </button>
         <button class="pause_btn" type="button">
-            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="pauseFunctions()">
+            <img src="{% static 'image/btn_pause.png' %}" alt="정지하기" onclick="handleCheckbox('stop')">
         </button>
         <button class="delete_btn" type="button">
-            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="handleCheckboxClick_delete_btn()">
+            <img src="{% static 'image/btn_delete.png' %}" alt="삭제하기" onclick="handleCheckbox('terminate')">
         </button>
     </div>
 
@@ -401,7 +458,7 @@
 
             <!-- {% for instance in instances_info %} -->
             <!-- <p>{{ instance.id }}</p> -->
-                <!-- {% if  instance.id  == clickedValue %}
+            <!-- {% if  instance.id  == clickedValue %}
                 <div>
                     
                     <p><em>Launch Time</em></p>
