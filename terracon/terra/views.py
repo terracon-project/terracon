@@ -19,9 +19,9 @@ def key_login(aws_access_key, aws_secret_key, aws_region):
               f'aws configure set output json'
     subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
 def main(request):
-    
     # 사용자로부터 입력 받은 AWS 액세스 키, 시크릿 키, 리전 정보
     if request.method == 'POST':
+        
         aws_access_key = request.POST.get('aws_access_key')
         aws_secret_key = request.POST.get('aws_secret_key')
         aws_region = request.POST.get('aws_region')
@@ -31,6 +31,7 @@ def main(request):
         #key_login(request.session.get('aws_access_key'),request.session.get('aws_secret_key'),request.session.get('aws_region'))
     # AWS SDK를 사용하여 EC2 클라이언트 생성
     try:
+        print(request.session.get('aws_access_key'),)
         ec2_client = boto3.client(
         'ec2',
             aws_access_key_id=request.session.get('aws_access_key'),
@@ -42,11 +43,14 @@ def main(request):
 
         # 인스턴스 목록 가져오기
         instances = ec2_client.describe_instances()
-
+    except:
+        print('액세스 키 또는 시크릿 키가 잘못되었습니다.')
+        return redirect('home')
         # 필요한 정보 추출 (인스턴스 이름, ID, 상태 등)
-        instance_info_list = []
-        for reservation in instances['Reservations']:                     
-            for instance in reservation['Instances']:
+    instance_info_list = []
+    for reservation in instances['Reservations']:                     
+        for instance in reservation['Instances']:
+            try:
                 if(instance['PublicDnsName']==''):
                     instance_public_dns='-'
                 else:
@@ -88,10 +92,8 @@ def main(request):
                     instance_name = '-'  # 이름이 없는 경우를 대비하여 기본값 설정
 
                 instance_info_list.append({'id': instance_id, 'name': instance_name, 'public_ip':instance_public_ip, 'state': instance_state, 'time': str(instance_time), 'ami': instance_ami, 'type': instance_type, 'public_dns': instance_public_dns, 'private_dns': instance_private_dns, 'private_ip': instance_private_ip, 'subnet': instance_subnet, 'vpc': instance_vpc});
-    except:
-        print('액세스 키 또는 시크릿 키가 잘못되었습니다.')
-        return redirect('home')
-
+            except:
+                continue
     # HTML 템플릿에 데이터 전달
     context = {'instances_info': instance_info_list}   
     return render(request, '1_main.html', context)
