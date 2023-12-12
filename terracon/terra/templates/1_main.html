@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/1_main.css' %}">
     <link rel="icon" href="{% static 'image/favicon-96x96.png' %}" type="image/x-icon">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
     <!-- 체크 -->
     <title>main</title>
 
@@ -43,6 +44,7 @@
                     throw new Error('Network response was not ok.');
                 })
                 .then(data => {
+                    
                 })
                 .catch(error => {
                     console.error('There was an error!', error);
@@ -117,7 +119,7 @@
         function refreshList() {
             location.reload(); // 현재 페이지를 다시 로드하여 리스트를 새로고침합니다.
         }
-
+        reload()
         let clickedValue; // 전역 변수로 선언
 
         //인스턴스 정보 팝업창
@@ -173,6 +175,8 @@
                 } else if (resultText === '삭제 됨') {
                     stateColorDiv.style.backgroundColor = '#D274FF  ';
                 }
+
+                console.log(resultText);
             });
         });
         function handleCheckbox(btnType) {
