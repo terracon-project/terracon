@@ -74,7 +74,6 @@ def main(request):
                     continue                              
                 # 이름 정보 가져오기
                 instance_id = instance['InstanceId']
-
                 instance_time = instance['LaunchTime']
                 instance_ami = instance['ImageId']
                 instance_type = instance['InstanceType']
@@ -103,7 +102,6 @@ def instances_view(request):
         data = json.loads(request.body)
         action = data.get('action')
         instance_ids = data.get('instance_ids')
-        #instance_ids_str = ' '.join(instance_ids)
         session = boto3.Session(
                 aws_access_key_id=request.session.get('aws_access_key'),
                 aws_secret_access_key=request.session.get('aws_secret_key'),
