@@ -142,11 +142,6 @@ def execute_terraform(request):
             subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
             subprocess.run(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir, check=True)
             time.sleep(1)
-            # proc = subprocess.Popen(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            # stdout, stderr = proc.communicate()
-            # process = subprocess.Popen(['terraform', 'apply', '-auto-approve'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            # subprocess.run(['terraform', 'init'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
-            # process = subprocess.Popen(['terraform', 'apply', '-auto-approve', '-parallelism=10'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=workdir)
         except subprocess.CalledProcessError as e:
             return JsonResponse({'success': False, 'message': 'Invalid request'})
         finally:

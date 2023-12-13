@@ -67,15 +67,6 @@
             return cookieValue;
         }
 
-        // function startFunctions() {
-        //     executeSelectedAction('start');
-        // }
-
-        // function pauseFunctions() {
-        //     executeSelectedAction('stop');
-        //     handleCheckboxClick_pause_btn();
-        // }
-
         function deleteFunctions() {
             executeSelectedAction('terminate');
             var delete_ok = document.getElementById("ok_delete");
@@ -237,93 +228,6 @@
             }
         }
 
-        // function handleCheckboxClick_start_btn(instanceId) {
-        //     var checkboxes = document.querySelectorAll('.checkboxes');
-        //     var state1Count = 0;
-        //     var state2Count = 0;
-
-        //     const targetDiv1 = document.getElementById('no_check');
-        //     const targetDiv2 = document.getElementById('already_start');
-        //     const targetDiv3 = document.getElementById('ok_start');
-
-        //     checkboxes.forEach(function (checkbox) {
-        //         var stateElement = checkbox.closest('.list').querySelector('#instance_state');
-        //         var stateText = stateElement.textContent.trim();
-
-        //         if (stateText === '실행 중' && checkbox.checked) {
-        //             state1Count++;
-        //         } else if (stateText === '중지 됨' && checkbox.checked) {
-        //             state2Count++;
-        //         }
-        //     });
-
-        //     // 조건에 따라 함수 호출
-        //     if (state2Count > 0) {
-        //         targetDiv3.style.display = 'flex';
-        //     } else if (state1Count > 0 && state2Count == 0) {
-        //         targetDiv2.style.display = 'flex';
-        //     } else if (state1Count == 0 && state2Count == 0) {
-        //         targetDiv1.style.display = 'flex';
-        //     }
-        // }
-
-        // function handleCheckboxClick_pause_btn(instanceId) {
-        //     var checkboxes = document.querySelectorAll('.checkboxes');
-        //     var state1Count = 0;
-        //     var state2Count = 0;
-
-        //     const targetDiv1 = document.getElementById('no_check');
-        //     const targetDiv2 = document.getElementById('already_pause');
-        //     const targetDiv3 = document.getElementById('ok_pause');
-
-        //     checkboxes.forEach(function (checkbox) {
-        //         var stateElement = checkbox.closest('.list').querySelector('#instance_state');
-        //         var stateText = stateElement.textContent.trim();
-
-        //         if (stateText === '중지 됨' && checkbox.checked) {
-        //             state1Count++;
-        //         } else if (stateText === '실행 중' && checkbox.checked) {
-        //             state2Count++;
-        //         }
-        //     });
-
-        //     // 조건에 따라 함수 호출
-        //     if (state2Count > 0) {
-        //         targetDiv3.style.display = 'flex';
-        //     } else if (state1Count > 0 && state2Count == 0) {
-        //         targetDiv2.style.display = 'flex';
-        //     } else if (state1Count == 0 && state2Count == 0) {
-        //         targetDiv1.style.display = 'flex';
-        //     }
-        // }
-
-        // function handleCheckboxClick_delete_btn(instanceId) {
-        //     var checkboxes = document.querySelectorAll('.checkboxes');
-        //     var state1Count = 0;
-        //     var state2Count = 0;
-
-        //     const targetDiv1 = document.getElementById('no_check');
-        //     const targetDiv2 = document.getElementById('delete_check');
-
-        //     checkboxes.forEach(function (checkbox) {
-        //         var stateElement = checkbox.closest('.list').querySelector('#instance_state');
-        //         var stateText = stateElement.textContent.trim();
-
-        //         if (stateText === '중지 됨' && checkbox.checked) {
-        //             state1Count++;
-        //         } else if (stateText === '실행 중' && checkbox.checked) {
-        //             state2Count++;
-        //         }
-        //     });
-
-        //     // 조건에 따라 함수 호출
-        //     if (state1Count == 0 && state2Count == 0) {
-        //         targetDiv1.style.display = 'flex';
-        //     } else {
-        //         targetDiv2.style.display = 'flex';
-        //     }
-        // }
-
         //리스트 영역 스크롤
 
         function checkDivHeight() {
@@ -454,40 +358,7 @@
     <!-- 인스턴스 ID 팝업 -->
     <div class="dark_area" id="insInfo">
         <div class="ins_popup" id="overlay">
-            <!-- <h4>인스턴스 정보</h4> -->
-
-            <!-- {% for instance in instances_info %} -->
-            <!-- <p>{{ instance.id }}</p> -->
-            <!-- {% if  instance.id  == clickedValue %}
-                <div>
-                    
-                    <p><em>Launch Time</em></p>
-                    <p>{{ instance.time }}</p>
-                    <br />
-                    <p><em>Image ID</em></p>
-                    <p>{{ instance.ami }}</p>
-                    <p><em>Instance Type</em></p>
-                    <p>{{ instance.type }}</p>
-                    <br />
-                    <p><em>Public Dns Name</em></p>
-                    <p>{{ instance.public_dns }}</p>
-                    <p><em>Public IP Address</em></p>
-                    <p>{{ instance.public_ip }}</p>
-                    <br />
-                    <p><em>Private Dns Name</em></p>
-                    <p>{{ instance.private_dns }}</p>
-                    <p><em>Private IP Address</em></p>
-                    <p>{{ instance.private_ip }}</p>
-                    <br />
-                    <p><em>Subnet ID</em></p>
-                    <p>{{ instance.subnet }}</p>
-                    <p><em>Vpc ID</em></p>
-                    <p>{{ instance.vpc }}</p>
-                </div>
-                {% endif %}
-            {% endfor %}
-
-            <button class="close_ins_btn" onclick="closeInsPopup()">닫기</button> -->
+       
         </div>
     </div>
 
